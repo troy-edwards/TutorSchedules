@@ -16,15 +16,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	Console.WriteLine("Development started.");
-	using (var scope = app.Services.CreateScope())
-	{
-		var services = scope.ServiceProvider;
-		var context = services.GetRequiredService<ScheduleContext>();
-		context.Database.EnsureCreated();
-	}
-	
-	Console.WriteLine("Development done.");
 }
 else
 {

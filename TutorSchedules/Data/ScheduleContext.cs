@@ -13,6 +13,6 @@ public class ScheduleContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<Tutor>().ToTable("Tutor");
+		modelBuilder.Entity<Tutor>().ToTable("Tutors");
 	}
 }

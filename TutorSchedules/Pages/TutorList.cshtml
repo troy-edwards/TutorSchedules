@@ -4,5 +4,18 @@
     ViewData["Title"] = "Tutor List";
 }
 
+
 <div>
+    <h1>Add Tutor:</h1>
+    <form method="post">
+        <label asp-for="NewTutorName"></label>
+        <input type="text" asp-for="NewTutorName"/>
+    </form>
+</div>
+<div>
+    <h1>Tutor List:</h1>
+    @foreach (var tutor in @Model.Tutors)
+    {
+        <p>@tutor.DisplayName</p>
+    }
 </div>
