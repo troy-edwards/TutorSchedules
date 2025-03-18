@@ -8,8 +8,11 @@
 <div>
     <h1>Add Tutor:</h1>
     <form method="post">
-        <label asp-for="NewTutorName"></label>
+        <label asp-for="NewTutorId">Id</label>
+        <input type ="number" asp-for="NewTutorId"/>
+        <label asp-for="NewTutorName">Display Name</label>
         <input type="text" asp-for="NewTutorName"/>
+        <input type="submit"/>
     </form>
 </div>
 <div>

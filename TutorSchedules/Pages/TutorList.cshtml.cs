@@ -10,6 +10,9 @@ public class TutorListModel : PageModel
 {
 	public List<Tutor> Tutors { get; set; }
 	private ScheduleContext _context;
+	[BindProperty]
+	public int NewTutorId { get; set; }
+	[BindProperty]
 	public string NewTutorName { get; set; }
 	public TutorListModel(ScheduleContext context)
 	{
@@ -22,14 +25,16 @@ public class TutorListModel : PageModel
 		Tutors = await _context.Tutors.ToListAsync();
 	}
 
-	public async Task OnPostAsync()
+	public async Task<IActionResult> OnPostAsync()
 	{
 		Tutors = await _context.Tutors.ToListAsync();
 		var newTutor = new Tutor()
 		{
+			Id = NewTutorId,
 			DisplayName = NewTutorName
 		};
 		_context.Tutors.Add(newTutor);
 		await _context.SaveChangesAsync();
+		return Page();
 	}
 }
