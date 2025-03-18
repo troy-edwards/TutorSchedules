@@ -35,6 +35,6 @@ public class TutorListModel : PageModel
 		};
 		_context.Tutors.Add(newTutor);
 		await _context.SaveChangesAsync();
-		return Page();
+		return RedirectToPage("/TutorList");
 	}
 }
