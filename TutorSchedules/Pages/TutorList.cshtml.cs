@@ -6,6 +6,7 @@ using TutorSchedules.Models;
 
 namespace TutorSchedules.Pages;
 
+
 public class TutorListModel : PageModel
 {
 	public List<Tutor> Tutors { get; set; }
@@ -22,7 +23,7 @@ public class TutorListModel : PageModel
 	
 	public async Task OnGetAsync()
 	{
-		Tutors = await _context.Tutors.ToListAsync();
+		Tutors = await _context.Tutors.OrderBy(t => t.DisplayName).ToListAsync();
 	}
 
 	public async Task<IActionResult> OnPostAsync()
@@ -33,6 +34,8 @@ public class TutorListModel : PageModel
 			Id = NewTutorId,
 			DisplayName = NewTutorName
 		};
+		if (Tutors.Any(t => t.Id == NewTutorId))
+			return RedirectToPage("/Error");
 		_context.Tutors.Add(newTutor);
 		await _context.SaveChangesAsync();
 		return RedirectToPage("/TutorList");
