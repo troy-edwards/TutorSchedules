@@ -7,7 +7,7 @@
 
 <div>
     <h1>Add Tutor:</h1>
-    <form method="post">
+    <form method="post" asp-page="TutorList.cshtml" asp-page-handler="Add">
         <label asp-for="NewTutorId">Id</label>
         <input type ="number" asp-for="NewTutorId"/>
         <label asp-for="NewTutorName">Display Name</label>
@@ -16,9 +16,22 @@
     </form>
 </div>
 <div>
-    <h1>Tutor List:</h1>
-    @foreach (var tutor in @Model.Tutors)
-    {
-        <p>@tutor.DisplayName</p>
-    }
+    <br/>
+    <h3 class="text-decoration-underline">Tutor List:</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var tutor in Model.Tutors)
+        {
+            <tr>@await Html.PartialAsync("Shared/_TutorListRow", tutor)</tr>
+        }
+        </tbody>
+    </table>
 </div>

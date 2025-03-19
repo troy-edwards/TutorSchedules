@@ -40,4 +40,22 @@ public class TutorListModel : PageModel
 		await _context.SaveChangesAsync();
 		return RedirectToPage("/TutorList");
 	}
+
+	public async Task<IActionResult> OnPostEditAsync(int idToEdit)
+	{
+		return RedirectToPage("/Login");
+	}
+	
+	public async Task<IActionResult> OnPostDeleteAsync(int idToDelete)
+	{
+		Tutors = await _context.Tutors.ToListAsync();
+		var tutorToDelete = Tutors.FirstOrDefault(t => t.Id == idToDelete);
+		if(tutorToDelete != null)
+		{
+			_context.Tutors.Remove(tutorToDelete);
+			await _context.SaveChangesAsync();
+		}
+
+		return RedirectToPage("/TutorList");
+	}
 }

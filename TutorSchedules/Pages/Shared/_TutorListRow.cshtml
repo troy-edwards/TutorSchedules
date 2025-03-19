@@ -1,0 +1,22 @@
+﻿@model TutorSchedules.Models.Tutor
+
+<tr>
+  <td>@Model.Id</td>
+  <td>@Model.DisplayName</td>
+  <td>
+    <form method="post" asp-page="TutorList" asp-page-handler="Edit">
+      <input name="idToEdit" value="@Model.Id" type="hidden"/>
+      <input type="submit" value="Edit" class="btn btn-primary"/>
+    </form>
+  </td>
+  <td>
+    <form method="post" asp-page="TutorList" asp-page-handler="Delete">
+      <input name="idToDelete" value="@Model.Id" type="hidden"/>
+      <input type="submit" value="Delete" class="btn btn-danger"/>
+    </form>
+  </td>
+</tr>
+
+<!--<form method="post">
+  
+</form> -->
