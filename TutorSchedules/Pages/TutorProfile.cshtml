@@ -1,0 +1,31 @@
+﻿@page "{Id:int?}"
+@model TutorInfoModel
+@{
+    ViewData["Title"] = "Tutor Profile";
+}
+
+<div>
+    <h1>@(Model.Id != null ? $"Edit Profile for {Model.Tutor.DisplayName}" : "Add New Tutor")</h1>
+    <form method="post">
+        <div class="form-group row">
+            <label asp-for="Tutor.Id" class="col-form-label col-sm-1">Id: </label>
+            <div class="col-sm-11">
+                @if (Model.Id == null)
+                {
+                    <input type="text" asp-for="Tutor.Id" value=0 class="form-control"/>
+                }
+                else
+                {
+                    <input type="text" asp-for="Tutor.Id" value=@Model.Id.Value readonly class="form-control"/>
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Tutor.DisplayName" class="col-form-label col-sm-1">Full Name:</label>
+            <div class="col-sm-11">
+                <input type="text" class="form-control" asp-for="Tutor.DisplayName" value="@Model.Tutor.DisplayName"/>
+            </div>
+        </div>
+        <input type="submit" value="submit"/>
+    </form>
+</div>
