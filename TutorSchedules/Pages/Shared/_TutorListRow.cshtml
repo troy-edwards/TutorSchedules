@@ -4,17 +4,13 @@
   <td>@Model.Id</td>
   <td>@Model.DisplayName</td>
   <td>
-    @* <form method="post" asp-page="TutorList" asp-page-handler="Edit"> *@
-    @*   <input name="idToEdit" value="@Model.Id" type="hidden"/> *@
-    @*   <input type="submit" value="Edit" class="btn btn-primary"/> *@
-    @* </form> *@
     <a asp-page="TutorProfile" asp-route-Id="@Model.Id" class="btn btn-primary">Edit</a>
   </td>
   <td>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#TutorDeleteConfirmation">
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#TutorDeleteConfirmation-@Model.Id">
       Delete
     </button>
-    <div class="modal fade" id="TutorDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="TutorDeleteConfirmationLabel" aria-hidden="true">
+    <div class="modal fade" id="TutorDeleteConfirmation-@Model.Id" tabindex="-1" role="dialog" aria-labelledby="TutorDeleteConfirmationLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -30,19 +26,13 @@
               <button type="submit" class="btn btn-danger">
                 Delete
               </button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-              No
-            </button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                No
+              </button>
             </form>
           </div>
         </div>
       </div>
     </div>
-      
-    @* </form> *@
   </td>
 </tr>
-
-<!--<form method="post">
-  
-</form> -->
