@@ -26,7 +26,10 @@ public class TutorInfoModel : PageModel
 		{
 			Tutor = new Tutor();
 		}
-			
+		else
+		{
 			Tutor = await _context.Tutors.FirstOrDefaultAsync(t => t.Id == Id);
+		}
+			
 	}
 }
