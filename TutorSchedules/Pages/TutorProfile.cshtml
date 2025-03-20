@@ -15,7 +15,7 @@
       }
       else
       {
-        <input type="number" inputmode="numeric" asp-for="Tutor.Id" readonly class="form-control-plaintext" value=@Model.Id.Value/>
+        <input type="number" asp-for="Tutor.Id" readonly class="form-control-plaintext" value=@Model.Id.Value/>
       }
       <span class="text-danger" asp-validation-for="Tutor.Id"></span>
     </div>
@@ -32,3 +32,8 @@
     <input type="submit" class="btn-success btn" value="@(Model.Id is null ? "Add Tutor" : "Edit Tutor")">
   </div>
 </form>
+
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
