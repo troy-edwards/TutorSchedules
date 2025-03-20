@@ -1,0 +1,9 @@
+﻿@page "{TutorsAdded:int}/{BlocksAdded:int}"
+@model TutorSchedules.UploadSuccessful
+
+<div class="jumbotron">
+  
+  <h1 class="">Upload Successful.</h1>
+  <p>Added @Model.BlocksAdded new time blocks for @Model.TutorsAdded tutors.</p>
+<a class="btn btn-primary" asp-page="Settings">Return To Settings</a>
+</div>

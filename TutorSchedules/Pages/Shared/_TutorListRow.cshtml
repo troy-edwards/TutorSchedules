@@ -4,7 +4,10 @@
   <td>@Model.Id</td>
   <td>@Model.DisplayName</td>
   <td>
-    <a asp-page="TutorProfile" asp-route-Id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-page="TutorDetails" asp-route-TutorId="@Model.Id" class="btn btn-primary">View Schedule</a>
+  </td>
+  <td>
+    <a asp-page="TutorProfile" asp-route-Id="@Model.Id" class="btn btn-primary">Edit Profile</a>
   </td>
   <td>
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#TutorDeleteConfirmation-@Model.Id">

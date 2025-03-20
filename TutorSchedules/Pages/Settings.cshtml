@@ -1,8 +1,26 @@
 ﻿@page
 @model SettingsModel
 @{
-    ViewData["Title"] = "Settings";
+  ViewData["Title"] = "Settings";
 }
 
-<div>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+    </div>
+    <div class="col-6">
+      <form method="post" asp-page="Settings" asp-page-handler="UploadSchedule" enctype="multipart/form-data">
+        <section class="form-group shadow p-3">
+          <div class="row">
+            <h4>Schedule File:</h4>
+          </div>
+          <div class="row">
+            <input class="form-control-file" asp-for="ScheduleFile" type="file"/>
+            <span class="text-danger" asp-validation-for="ScheduleFile"></span>
+          </div>
+          <input type="submit" value="Upload" class="btn btn-primary"/>
+        </section>
+      </form>
+    </div>
+  </div>
 </div>
