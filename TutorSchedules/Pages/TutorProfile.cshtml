@@ -1,34 +1,34 @@
 ﻿@page "{Id:int?}"
 @model TutorInfoModel
 @{
-    ViewData["Title"] = "Tutor Profile";
+  ViewData["Title"] = "Tutor Profile";
 }
 
-<div>
-    <h1>@(Model.Id != null ? $"Edit Profile for {Model.Tutor.DisplayName}" : "Add New Tutor")</h1>
-    <form method="post">
-        <div class="form-group row">
-            <label asp-for="Tutor.Id" class="col-form-label col-sm-1">Id: </label>
-            <div class="col-sm-11">
-                @if (Model.Id == null)
-                {
-                    <input type="text" asp-for="Tutor.Id" class="form-control"/>
-                }
-                else
-                {
-                    <input type="text" asp-for="Tutor.Id" value=@Model.Id.Value readonly class="form-control"/>
-                }
-            </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="Tutor.DisplayName" class="col-form-label col-sm-1">Full Name:</label>
-            <div class="col-sm-11">
-                <input type="text" class="form-control" asp-for="Tutor.DisplayName" value="@Model.Tutor.DisplayName"/>
-            </div>
-        </div>
-        <div class="justify-content-end">
-            <a class="btn btn-primary" asp-page="/TutorList">Cancel</a>
-            <button type="submit" class="btn-success btn">@(Model.Id == null ? "Add Tutor" : "Edit Tutor")</button>
-        </div>
-    </form>
-</div>
+<h1>@(Model.Id is null ? "Add New Tutor" : $"Edit Profile for {Model.Tutor.DisplayName}")</h1>
+<form method="post">
+  <div class="form-group row">
+    <label asp-for="Tutor.Id" class="col-form-label col-sm-1">Id: </label>
+    <div class="col-sm-11">
+      @if (Model.Id is null)
+      {
+        <input type="number" asp-for="Tutor.Id" class="form-control"/>
+      }
+      else
+      {
+        <input type="number" inputmode="numeric" asp-for="Tutor.Id" readonly class="form-control-plaintext" value=@Model.Id.Value/>
+      }
+      <span class="text-danger" asp-validation-for="Tutor.Id"></span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label asp-for="Tutor.DisplayName" class="col-form-label col-sm-1">Full Name:</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" asp-for="Tutor.DisplayName" value="@Model.Tutor.DisplayName"/>
+      <span class="text-danger" asp-validation-for="Tutor.DisplayName"></span>
+    </div>
+  </div>
+  <div class="justify-content-end">
+    <a class="btn btn-primary" asp-page="/TutorList">Cancel</a>
+    <input type="submit" class="btn-success btn" value="@(Model.Id is null ? "Add Tutor" : "Edit Tutor")">
+  </div>
+</form>

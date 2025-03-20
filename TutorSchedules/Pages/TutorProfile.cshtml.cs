@@ -15,35 +15,45 @@ public class TutorInfoModel : PageModel
 	public int? Id { get; set; }
 	[BindProperty]
 	public Tutor Tutor { get; set; }
-	public bool AddingNewTutor { get; set; }
 
 	public TutorInfoModel(ScheduleContext context)
 	{
 		_context = context;
 	}
 
-	public async Task OnGet()
+	public async Task<IActionResult> OnGet()
 	{
-		AddingNewTutor = !Id.HasValue;
-		if (AddingNewTutor)
+		if (Id is null)
 		{
 			Tutor = new Tutor();
 		}
 		else
 		{
 			Tutor = await _context.Tutors.FirstOrDefaultAsync(t => t.Id == Id);
+			if (Tutor is null)
+			{
+				return RedirectToPage("/TutorNotFound");
+			}
 		}
+
+		return Page();
 	}
 
 	public async Task<IActionResult> OnPostAsync()
 	{
-		if (Tutor.Id == Id)
+		if (!ModelState.IsValid)
+			return RedirectToPage("/Shenanigans");
+		if (Id is null)
+		{
+			_context.Tutors.Add(Tutor);
+		}
+		else if (Tutor.Id == Id)
 		{
 			_context.Tutors.Attach(Tutor).State = EntityState.Modified;
 		}
 		else
 		{
-			_context.Tutors.Add(Tutor);
+			return RedirectToPage("/Shenanigans");
 		}
 		await _context.SaveChangesAsync();
 		return RedirectToPage("/TutorList");

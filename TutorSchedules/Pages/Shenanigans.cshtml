@@ -1,0 +1,19 @@
+﻿@page
+@model TutorSchedules.Pages.Shenanigans
+
+<div>
+  <h1 class="jumbotron">Shenanigans detected.</h1>
+  @{ int randomSlideNumber = new Random(DateTime.Now.Millisecond).Next(1, 4);}
+  @switch(randomSlideNumber)
+  {
+    case 1:
+      <img src="https://media1.tenor.com/m/ymA2IoVSH8UAAAAC/squinting-skeptical.gif" class="d-block w-100" alt="fry glaring">
+      break;
+    case 2:
+      <img src="https://media1.tenor.com/m/PMOBVVRrfh0AAAAC/homer-homero.gif" class="d-block w-100" alt="homer glaring">
+      break;
+    case 3:
+      <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjBsaW94dzFreWhyNmRzdGp4b3J1aHlyajJwenBwcGo5N2hpM3NiZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RQMkfKODe8Okw/giphy.gif" class="d-block w-100" alt="homer glaring">
+      break;
+  }
+</div>

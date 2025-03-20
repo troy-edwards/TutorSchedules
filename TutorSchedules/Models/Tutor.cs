@@ -6,10 +6,11 @@ namespace TutorSchedules.Models;
 public class Tutor
 {
 	[Key]
-	[Range(0,9999999)]
+	[Range(0,9999999, ErrorMessage = "Id can be up to 7 digits long.")]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public int Id { get; set; }
 	[Required]
+	[StringLength(30, MinimumLength = 1, ErrorMessage = "Name must be between 1 and 30 characters long.")]
 	public string DisplayName { get; set; }
 	//public TutorLevel Level { get; set; }
 }

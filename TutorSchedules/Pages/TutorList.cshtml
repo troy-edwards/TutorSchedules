@@ -1,40 +1,24 @@
 ﻿@page
 @model TutorListModel
 @{
-    ViewData["Title"] = "Tutor List";
+  ViewData["Title"] = "Tutor List";
 }
 
-
-
-<div>
-    <h3 class="text-decoration-underline">Tutor List:</h3>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var tutor in Model.Tutors)
-        {
-            <tr>@await Html.PartialAsync("Shared/_TutorListRow", tutor)</tr>
-        }
-        </tbody>
-    </table>
-</div>
-<div>
-    <a class="btn btn-primary" asp-page="TutorProfile">Add New Tutor</a>
-    
-    @* <h1>Add Tutor:</h1> *@
-    @* *@
-    @* <form method="post" asp-page="TutorList.cshtml" asp-page-handler="Add"> *@
-    @*     <label asp-for="NewTutorId">Id</label> *@
-    @*     <input type="number" asp-for="NewTutorId"/> *@
-    @*     <label asp-for="NewTutorName">Display Name</label> *@
-    @*     <input type="text" asp-for="NewTutorName"/> *@
-    @*     <input type="submit"/> *@
-    @* </form> *@
-</div>
+<h3 class="text-decoration-underline">Tutor List:</h3>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  @foreach (var tutor in Model.Tutors)
+  {
+    <tr>@await Html.PartialAsync("Shared/_TutorListRow", tutor)</tr>
+  }
+  </tbody>
+</table>
+<a class="btn btn-primary" asp-page="TutorProfile">Add New Tutor</a>
