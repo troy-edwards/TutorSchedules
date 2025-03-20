@@ -10,11 +10,11 @@
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#TutorDeleteConfirmation-@Model.Id">
       Delete
     </button>
-    <div class="modal fade" id="TutorDeleteConfirmation-@Model.Id" tabindex="-1" role="dialog" aria-labelledby="TutorDeleteConfirmationLabel" aria-hidden="true">
+    <div class="modal fade" id="TutorDeleteConfirmation-@Model.Id" tabindex="-1" role="dialog" aria-labelledby="TutorDeleteConfirmationLabel-@Model.Id" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="TutorDeleteConfirmationLabel">Confirm Delete?</h5>
+            <h5 class="modal-title" id="TutorDeleteConfirmationLabel-@Model.Id">Confirm Delete?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
