@@ -1,51 +1,55 @@
 ﻿@page "{TutorId:int}"
 @model TutorSchedules.Pages.TutorDetails
 
+@{
+  ViewData["Title"] = $"Details for {Model.Tutor.DisplayName}";
+}
+
 <div class="container">
   <div class="row">
     <h1>Details for @Model.Tutor.DisplayName</h1>
   </div>
-  <section class="row" id="MainSchedule">
+  <section class="row" style="white-space: nowrap;" id="MainSchedule">
     <h2 class="text-decoration-underline">Schedule:</h2>
-    @for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Saturday; day++)
-    {
-      <div class="col col-2 text-center shadow rounded">
-        <h3>@day</h3>
-        @{ var scheduleForDay =
-             Model.ScheduledTimes
-               .Where(b => b.Weekday == day)
-               .OrderBy(b => b.StartTime); }
+      @for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Saturday; day++)
+      {
+        <div class="col col-2 text-center shadow rounded" style="min-width: 200px;">
+          <h3>@day</h3>
+          @{ var scheduleForDay =
+               Model.ScheduledTimes
+                 .Where(b => b.Weekday == day)
+                 .OrderBy(b => b.StartTime); }
 
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Start Time</th>
-            <th>End Time</th>
-          </tr>
-          </thead>
-          <tbody>
-          @if (scheduleForDay.Any())
-          {
-            @foreach (var block in scheduleForDay)
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Start Time</th>
+              <th>End Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (scheduleForDay.Any())
+            {
+              @foreach (var block in scheduleForDay)
+              {
+                <tr>
+                  <td>@block.StartTime</td>
+                  <td>@block.EndTime</td>
+                </tr>
+              }
+            }
+            else
             {
               <tr>
-                <td>@block.StartTime</td>
-                <td>@block.EndTime</td>
+                <td colspan="2">
+                  <h4>Off</h4>
+                </td>
               </tr>
             }
-          }
-          else
-          {
-            <tr>
-              <td colspan="2">
-                <h4>Off</h4>
-              </td>
-            </tr>
-          }
-          </tbody>
-        </table>
-      </div>
-    }
+            </tbody>
+          </table>
+        </div>
+      }
   </section>
   <section class="row" id="EmbeddedSchedule">
 

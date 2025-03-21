@@ -16,10 +16,14 @@
             <p class="text-primary">Note: This will override old schedule.</p>
           </div>
           <div class="row">
-            <input class="form-control-file" asp-for="ScheduleFile" type="file"/>
+            <input class="form-control-file my-2" asp-for="ScheduleFile" type="file"/>
             <span class="text-danger" asp-validation-for="ScheduleFile"></span>
           </div>
-          <input type="submit" value="Upload" class="btn btn-primary"/>
+          <div class="row">
+            <div class="col">
+              <input type="submit" value="Upload" class="btn btn-primary"/>
+            </div>
+          </div>
         </section>
       </form>
     </div>
