@@ -5,19 +5,19 @@
   <div class="row">
     <h1>Details for @Model.Tutor.DisplayName</h1>
   </div>
-  <section class="row" id="MainSchedule" >
+  <section class="row" id="MainSchedule">
     <h2 class="text-decoration-underline">Schedule:</h2>
     @for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Saturday; day++)
     {
       <div class="col col-2 text-center shadow rounded">
         <h3>@day</h3>
-        @{ var scheduleForDay = 
-            Model.ScheduledTimes
-              .Where(b => b.Weekday == day)
-              .OrderBy(b => b.StartTime); }
+        @{ var scheduleForDay =
+             Model.ScheduledTimes
+               .Where(b => b.Weekday == day)
+               .OrderBy(b => b.StartTime); }
         @if (scheduleForDay.Any())
         {
-          <table class="table table-striped">
+          <table class="table">
             <thead>
             <tr>
               <th>Start Time</th>
@@ -25,13 +25,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              @foreach (var block in scheduleForDay)
-              {
+            @foreach (var block in scheduleForDay)
+            {
+              <tr>
                 <td>@block.StartTime</td>
                 <td>@block.EndTime</td>
-              }
-            </tr>
+              </tr>
+            }
             </tbody>
           </table>
         }

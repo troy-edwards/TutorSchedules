@@ -4,6 +4,14 @@ namespace TutorSchedules.Models;
 
 public class TimeBlock
 {
+    public TimeBlock(int tutorId, DayOfWeek weekday, TimeOnly startTime, TimeOnly endTime)
+    {
+        TutorId = tutorId;
+        Weekday = weekday;
+        StartTime = startTime;
+        EndTime = endTime;
+    }
+    
     [Key]
     public int Id { get; set; }
     
