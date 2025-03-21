@@ -65,7 +65,7 @@ public class SettingsModel : PageModel
 			}
 			catch (FormatException e)
 			{
-				ModelState.AddModelError("/ScheduleFile", e.Message);
+				ModelState.AddModelError("ScheduleFile", e.Message);
 				return Page();
 			}
 			

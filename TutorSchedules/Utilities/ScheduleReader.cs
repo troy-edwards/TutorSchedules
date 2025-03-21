@@ -41,11 +41,11 @@ public class ScheduleReader
     private void ProcessRow(string row, int rowNumber)
     {
         if (row is null)
-            throw new FormatException($"A row can not be null. Row {rowNumber} is null.");
+            throw new FormatException($"A row can not be null. Row {rowNumber + 1} is null.");
         var columns = row.Split(",");
         
         if (columns.Length != 7)
-            throw new FormatException($"A row must have 7 columns. Row {rowNumber} has {columns.Length} columns. (Merged columns still count as multiple columns.");
+            throw new FormatException($"A row must have 7 columns. Row {rowNumber + 1} has {columns.Length} columns. (Merged columns still count as multiple columns.");
         string name = columns.First();
         name = name == "" ? _previousName : name;
         _previousName = name;
@@ -63,11 +63,11 @@ public class ScheduleReader
                 continue;
             var startAndEndTimes = timeInterval.Split("-").Select(s => s.Trim()).ToArray();
             if (startAndEndTimes.Count() != 2)
-                throw new FormatException($"Each cell on the schedule must contain exactly 2 times, seperated by a \"-\". Row {rowNumber}, column {columnNumber} does not meet this requirement.");
+                throw new FormatException($"Each cell on the schedule must contain exactly 2 times, seperated by a \"-\". Row {rowNumber + 1}, column {columnNumber + 1} does not meet this requirement.");
             var startTime = GetTimeFromString(startAndEndTimes[0], rowNumber, columnNumber);
             var endTime = GetTimeFromString(startAndEndTimes[1], rowNumber, columnNumber);
             if (endTime < startTime)
-                throw new FormatException($"End time is before start time at row {rowNumber}, column {columnNumber}.");
+                throw new FormatException($"End time is before start time at row {rowNumber + 1}, column {columnNumber + 1}.");
             _blocks.Add(new TimeBlock(tutorId, day, startTime, endTime));
         }
     }
@@ -81,7 +81,7 @@ public class ScheduleReader
     {
         bool parseSuccessful = TimeOnly.TryParse(timeString, out TimeOnly time);
         if (!parseSuccessful)
-            throw new FormatException($"Times must be in the format \"XX:XX XM\". \"{timeString}\" at row {row}, column {column} was not read.");
+            throw new FormatException($"Times must be in the format \"XX:XX XM\". \"{timeString}\" at row {row + 1}, column {column + 1} was not read.");
         return time;
     }
 }

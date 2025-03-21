@@ -12,7 +12,8 @@
       <form method="post" asp-page="Settings" asp-page-handler="UploadSchedule" enctype="multipart/form-data">
         <section class="form-group shadow p-3">
           <div class="row">
-            <h4>Schedule File:</h4>
+            <h4>Upload schedule File:</h4>
+            <p class="text-primary">Note: This will override old schedule.</p>
           </div>
           <div class="row">
             <input class="form-control-file" asp-for="ScheduleFile" type="file"/>
