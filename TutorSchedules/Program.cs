@@ -32,5 +32,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.UseStatusCodePagesWithRedirects("/errors/{0}");
 app.Run();
