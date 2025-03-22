@@ -4,18 +4,52 @@
   ViewData["Title"] = "Dashboard";
 }
 
-<form>
-  <label asp-for="Subject">Subject:</label>
-  <input asp-for="Subject" type="text"/>
-  <div class="form-check form-switch">
-    <label class="form-check-label" asp-for="UseCustomTime">Use Custom Time? </label>
-    <input asp-for="UseCustomTime" class="form-check-input" type="checkbox" 
-           role="switch" data-bs-toggle="collapse" data-bs-target="#CustomTimeInfo"/>
+<div class="container">
+  <div class="row">
+    <form>
+      <label asp-for="Subject">Subject:</label>
+      <input asp-for="Subject" type="text"/>
+      <div class="form-check form-switch my-2">
+        <label class="form-check-label" asp-for="UseCustomTime">Use Custom Time? </label>
+        <input asp-for="UseCustomTime" class="form-check-input" type="checkbox"
+               role="switch" data-bs-toggle="collapse" data-bs-target="#CustomTimeInfo"/>
+      </div>
+      <div class="collapse" id="CustomTimeInfo">
+        <label asp-for="CustomWeekDay">Weekday</label>
+        <input asp-for="CustomWeekDay" type="text"/>
+        <label asp-for="CustomTime">Time:</label>
+        <input asp-for="CustomTime" type="time"/>
+      </div>
+
+      <button type="submit" class="btn btn-success">Update List</button>
+    </form>
   </div>
-  <div class="collapse" id="CustomTimeInfo">
-    <label asp-for="CustomWeekDay">Weekday</label>
-    <input asp-for="CustomWeekDay" type="text"/>
-    <label asp-for="CustomTime">Time:</label>
-    <input asp-for="CustomTime" type="time"/>
+  <div class="row">
+    <div class="col">
+      <h1>Schedule for @Model.TimeToUse on @Model.WeekdayToUse</h1>
+    </div>
   </div>
-</form>
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Arrival Time</th>
+          <th>Departure Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in Model.ActiveTutors)
+        {
+          <tr>
+            <td>@row.TutorName</td>
+            <td>@row.ArrivalDisplay</td>
+            <td>@row.DepartureString</td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
