@@ -1,6 +1,11 @@
 ﻿@page
 @model TutorSchedules.Pages.Shenanigans
 
+@{
+  ViewData["Title"] = "Shenanigans";
+}
+
+
 <div>
   <h1 class="jumbotron">Shenanigans detected.</h1>
   @{ int randomSlideNumber = new Random(DateTime.Now.Millisecond).Next(1, 4);}

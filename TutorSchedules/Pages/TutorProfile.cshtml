@@ -1,7 +1,7 @@
 ﻿@page "{Id:int?}"
 @model TutorInfoModel
 @{
-  ViewData["Title"] = "Tutor Profile";
+  ViewData["Title"] = Model.Id is null ? "Add Tutor" : $"Edit {Model.Tutor.DisplayName}";
 }
 
 <h1>@(Model.Id is null ? "Add New Tutor" : $"Edit Profile for {Model.Tutor.DisplayName}")</h1>

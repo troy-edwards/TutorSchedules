@@ -9,10 +9,10 @@
     <div class="col-6">
     </div>
     <div class="col-6">
-      <form method="post" asp-page="Settings" asp-page-handler="UploadSchedule" enctype="multipart/form-data">
-        <section class="form-group shadow p-3">
+      <section id="ScheduleUpload" class="row form-group shadow-lg p-3 my-4">
+        <form method="post" asp-page="Settings" asp-page-handler="UploadSchedule" enctype="multipart/form-data">
           <div class="row">
-            <h4>Upload schedule File:</h4>
+            <h4 class="text-decoration-underline">Upload schedule File:</h4>
             <p class="text-primary">Note: This will override old schedule.</p>
           </div>
           <div class="row">
@@ -24,8 +24,36 @@
               <input type="submit" value="Upload" class="btn btn-primary"/>
             </div>
           </div>
-        </section>
-      </form>
+        </form>
+      </section>
+      <section id="ScheduleClear" class="row shadow-lg p-3 my-4">
+        <div class="col-6">
+          <h4 class="text-decoration-underline">Clear Schedule:</h4>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteScheduleModal">Clear Schedule</button>
+
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="DeleteScheduleModal" tabindex="-1" role="dialog" aria-labeledby="DeleteScheduleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DeleteScheduleModalLabel">Delete Schedule</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <form method="post" asp-page="Settings" asp-page-handler="DeleteSchedule">
+          <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </form>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No, Keep</button>
+      </div>
     </div>
   </div>
 </div>
