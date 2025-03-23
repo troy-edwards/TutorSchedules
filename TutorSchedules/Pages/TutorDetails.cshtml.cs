@@ -11,7 +11,7 @@ public class TutorDetails : PageModel
     [BindProperty(SupportsGet = true)]
     public int TutorId { get; set; }
     public Tutor Tutor { get; set; }
-    public ICollection<TimeBlock> ScheduledTimes { get; set; }
+    public ICollection<TimeBlock>? ScheduledTimes { get; set; }
     private ScheduleContext _context;
 
     public TutorDetails(ScheduleContext context)

@@ -13,6 +13,6 @@ public class Tutor
 	[StringLength(30, MinimumLength = 1, ErrorMessage = "Name must be between 1 and 30 characters long.")]
 	public string DisplayName { get; set; } = "";
 
-	public ICollection<TimeBlock> ScheduledTimes { get; set; } = new List<TimeBlock>();
+	public ICollection<TimeBlock>? ScheduledTimes { get; set; } = new List<TimeBlock>();
 	//public TutorLevel Level { get; set; }
 }

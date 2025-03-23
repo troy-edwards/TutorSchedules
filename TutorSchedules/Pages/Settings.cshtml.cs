@@ -10,7 +10,7 @@ namespace TutorSchedules.Pages;
 
 public class SettingsModel : PageModel
 {
-    [BindProperty] public IFormFile ScheduleFile { get; set; }
+    [BindProperty] public IFormFile? ScheduleFile { get; set; }
 
     private ScheduleContext _context;
 

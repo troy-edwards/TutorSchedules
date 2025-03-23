@@ -10,7 +10,7 @@ public class ScheduleReader
     private readonly List<TimeBlock> _blocks;
     private string _previousName;
 
-    private static readonly List<string> _offStrings =
+    private static readonly List<string> OffStrings =
     [
         "Off",
         ""
@@ -21,6 +21,7 @@ public class ScheduleReader
         _fileLines = fileLines;
         _nameToId = nameToId;
         _blocks = new List<TimeBlock>();
+        _previousName = "";
     }
 
     public List<TimeBlock> ExtractSchedule()
@@ -112,7 +113,7 @@ public class ScheduleReader
 
     private bool TutorIsOff(string timeInterval)
     {
-        return _offStrings.Contains(timeInterval);
+        return OffStrings.Contains(timeInterval);
     }
 
     private static string[] GetStartAndEndTimesAsStrings(int rowNumber, string timeInterval, int columnNumber)
