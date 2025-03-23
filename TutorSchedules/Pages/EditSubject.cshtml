@@ -1,0 +1,40 @@
+﻿@page "{CourseId?}"
+@model TutorSchedules.Pages.EditSubject
+
+@{
+  ViewData["Title"] = Model.CourseId is null ? "Add Subject" : $"Edit {Model.Subject.Name}";
+}
+
+<h1>@(Model.CourseId is null ? "Add New Subject" : $"Edit {Model.Subject.Name}")</h1>
+<form method="post">
+  <div class="form-group row">
+    <label asp-for="Subject.SubjectId" class="col-form-label col-sm-1">Course Id:</label>
+    <div class="col-sm-11">
+      @if (Model.CourseId is null)
+      {
+        <input type="text" asp-for="Subject.SubjectId" class="form-control"/>
+      }
+      else
+      {
+        <input type="text" asp-for="Subject.SubjectId" readonly class="form-control-plaintext" value="@Model.Subject.SubjectId"/>
+      }
+      <span class="text-danger" asp-validation-for="Subject.SubjectId"></span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label asp-for="Subject.Name" class="col-form-label col-sm-1">Course Name:</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" asp-for="Subject.Name" value="@Model.Subject.Name"/>
+      <span class="text-danger" asp-validation-for="Subject.Name"></span>
+    </div>
+  </div>
+  <div class="justify-content-end">
+    <a class="btn btn-primary" asp-page="/SubjectList">Cancel</a>
+    <input type="submit" class="btn btn-success" value="@(Model.CourseId is null ? "Add Subject" : "Edit Subject")"/>
+  </div>
+</form>
+
+
+@section Scripts {
+  @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

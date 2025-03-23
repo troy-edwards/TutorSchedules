@@ -2,7 +2,7 @@
 
 namespace TutorSchedules.Pages;
 
-public class TutorNotFound : PageModel
+public class DataNotFound : PageModel
 {
     public void OnGet()
     {

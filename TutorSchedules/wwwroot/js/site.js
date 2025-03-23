@@ -13,3 +13,7 @@ window.addEventListener('load', function() {
     var CustomTimeInfo = document.getElementById('CustomTimeInfo');
     CustomTimeInfo.style.display = checkbox.checked ? 'block' : 'none';
 });
+
+function goBack() {
+    window.history.back();
+}

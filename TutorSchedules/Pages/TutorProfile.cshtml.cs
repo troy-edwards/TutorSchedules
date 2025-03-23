@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TutorSchedules.Data;
-using TutorSchedules.Migrations;
 using TutorSchedules.Models;
 
 namespace TutorSchedules.Pages;
@@ -17,16 +16,13 @@ public class TutorInfoModel : PageModel
     public int? Id { get; set; }
 
     [BindProperty] public Tutor Tutor { get; set; }
-
-    [Range(0, 10)] 
-    public List<int> List { get; set; } 
     
     public TutorInfoModel(ScheduleContext context)
     {
         _context = context;
     }
 
-    public async Task<IActionResult> OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
         if (Id is null)
         {
@@ -37,7 +33,7 @@ public class TutorInfoModel : PageModel
             Tutor = await _context.Tutors.FirstOrDefaultAsync(t => t.Id == Id);
             if (Tutor is null)
             {
-                return RedirectToPage("/TutorNotFound");
+                return RedirectToPage("/DataNotFound");
             }
         }
 
