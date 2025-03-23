@@ -50,6 +50,7 @@ public class EditSubject : PageModel
                 return Page();
             }
 
+            await AddNewConfidencesToSubject();
             _context.Subjects.Add(Subject);
 
         }
@@ -64,5 +65,21 @@ public class EditSubject : PageModel
         
         await _context.SaveChangesAsync();
         return RedirectToPage("/SubjectList");
+    }
+
+    private async Task AddNewConfidencesToSubject()
+    {
+        var tutors = await _context.Tutors.ToListAsync();
+        var newConfidences = new List<TutorSubjectConfidence>();
+        foreach (var tutor in tutors)
+        {
+            newConfidences.Add(new TutorSubjectConfidence
+                {
+                    ConfidenceLevel = null,
+                    SubjectId = Subject.SubjectId,
+                    TutorId = tutor.Id
+                });
+        }
+        _context.Confidences.AddRange(newConfidences);
     }
 }

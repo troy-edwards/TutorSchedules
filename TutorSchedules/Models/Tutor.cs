@@ -14,5 +14,8 @@ public class Tutor
 	public string DisplayName { get; set; } = "";
 
 	public ICollection<TimeBlock>? ScheduledTimes { get; set; } = new List<TimeBlock>();
+
+	public ICollection<TutorSubjectConfidence> SubjectConfidences { get; set; } =
+		new List<TutorSubjectConfidence>();
 	//public TutorLevel Level { get; set; }
 }

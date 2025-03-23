@@ -51,6 +51,8 @@ public class TutorInfoModel : PageModel
                 ModelState.AddModelError("Tutor.Id", "A tutor with that Id number already exists.");
                 return Page();
             }
+
+            await AddNewConfidencesToTutor();
             _context.Tutors.Add(Tutor);
         }
         else if (Tutor.Id == Id)
@@ -64,5 +66,21 @@ public class TutorInfoModel : PageModel
 
         await _context.SaveChangesAsync();
         return RedirectToPage("/TutorList");
+    }
+
+    private async Task AddNewConfidencesToTutor()
+    {
+        var subjects = await _context.Subjects.ToListAsync();
+        var newConfidences = new List<TutorSubjectConfidence>();
+        foreach (var subject in subjects)
+        {
+            newConfidences.Add(new TutorSubjectConfidence
+                {
+                    ConfidenceLevel = null,
+                    SubjectId = subject.SubjectId,
+                    TutorId = Tutor.Id
+                });
+        }
+        _context.Confidences.AddRange(newConfidences);
     }
 }
