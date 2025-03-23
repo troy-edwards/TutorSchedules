@@ -77,7 +77,7 @@ public class IndexModel : PageModel
 				DepartureString = t.EndTime.ToString(),
 				SubjectConfidence = ShowSubject ? 5 : null
 			})
-			.OrderBy(r => r.TutorName)
+			.OrderByDescending(r => r.SubjectConfidence)
 			.ToList();
 	}
 }

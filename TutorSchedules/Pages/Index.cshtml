@@ -1,4 +1,6 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using TutorSchedules.Utilities
 @model IndexModel
 @{
   ViewData["Title"] = "Dashboard";
@@ -7,7 +9,7 @@
 
 <div class="container">
   <div class="row">
-    <form method="post" class="shadow">
+    <form method="post" class="shadow-lg p-3" >
       <label asp-for="Subject">Subject:</label>
       <input asp-for="Subject" type="text" value="College Algebra"/>
       <div class="form-check form-switch my-2">
@@ -23,10 +25,10 @@
       <button type="submit" class="btn btn-success my-2">Update List</button>
     </form>
   </div>
-  <div class="row shadow my-3">
+  <div class="row shadow-lg my-4 p-3">
     <h1>@Model.ActiveTutors.Count Tutors available at @Model.TimeToUse on @Model.WeekdayToUse</h1>
     <div class="col">
-      <table class="table table-hover table-striped">
+      <table class="table table-hover">
         <thead>
         <tr>
           <th>Name</th>
@@ -41,13 +43,13 @@
         <tbody>
         @foreach (var row in Model.ActiveTutors)
         {
-          <tr>
+          <tr class="">
             <td>@row.TutorName</td>
             <td>@row.ArrivalDisplay</td>
             <td>@row.DepartureString</td>
             @if (Model.ShowSubject)
             {
-              <th>@row.SubjectConfidence</th>
+              <td style="background-color: @ComfortColors.GetColor(row.SubjectConfidence); border-radius: 5px; ">@row.SubjectConfidence</td>
             }
           </tr>
         }
