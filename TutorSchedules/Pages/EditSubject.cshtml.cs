@@ -46,7 +46,7 @@ public class EditSubject : PageModel
         {
             if (_context.Subjects.Any(s => s.SubjectId == Subject.SubjectId))
             {
-                ModelState.AddModelError("Subject.CourseId", "A subject with that course id already exists.");
+                ModelState.AddModelError("SubjectId.CourseId", "A subject with that course id already exists.");
                 return Page();
             }
 

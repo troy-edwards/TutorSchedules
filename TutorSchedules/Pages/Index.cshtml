@@ -10,8 +10,8 @@
 <div class="container">
   <div class="row">
     <form method="post" class="shadow-lg p-3" >
-      <label asp-for="Subject">Subject:</label>
-      <input asp-for="Subject" type="text" value="College Algebra"/>
+      <label asp-for="SubjectId">SubjectId:</label>
+      <input asp-for="SubjectId" type="text" value="College Algebra"/>
       <div class="form-check form-switch my-2">
         <label class="form-check-label" asp-for="UseCustomTime">Use Custom Time? </label>
         <input asp-for="UseCustomTime" class="form-check-input" type="checkbox" id="CustomTimeVisible"/>
@@ -36,7 +36,7 @@
           <th>Departure Time</th>
           @if (Model.ShowSubject)
           {
-            <th>@Model.Subject Comfort Level</th>
+            <th>@Model.Subject.Name Comfort Level</th>
           }
         </tr>
         </thead>
@@ -49,7 +49,7 @@
             <td>@row.DepartureString</td>
             @if (Model.ShowSubject)
             {
-              <td style="background-color: @ComfortColors.GetColor(row.SubjectConfidence); border-radius: 5px; ">@row.SubjectConfidence</td>
+              <td style="background-color: @ComfortColors.GetColor(row.SubjectConfidence); border-radius: 5px; ">@(row.SubjectConfidence is null ? "?" : $"{row.SubjectConfidence.Value}")</td>
             }
           </tr>
         }

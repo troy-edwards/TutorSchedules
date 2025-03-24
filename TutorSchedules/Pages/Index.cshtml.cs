@@ -23,7 +23,7 @@ public class IndexModel : PageModel
 	];
 	private ScheduleContext _context;
 	[BindProperty(SupportsGet = true)]
-	public string? Subject { get; set; }
+	public string? SubjectId { get; set; }
 	[BindProperty(SupportsGet = true)]
 	public bool UseCustomTime { get; set; }
 	[BindProperty(SupportsGet = true)]
@@ -35,21 +35,37 @@ public class IndexModel : PageModel
 	public DateTime DateToUse { get; set; }
 	public List<DashboardDisplayRow>? ActiveTutors;
 	public bool ShowSubject { get; set; }
+	public Subject? Subject { get; set; }
 	public IndexModel(ScheduleContext context)
 	{
 		_context = context;
 		ShowSubject = false;
 	}
 
+	public async Task SetupVariables()
+	{
+		bool useInputSubject = !SubjectId.IsNullOrEmpty();
+		if (useInputSubject)
+		{
+			Subject = await _context.Subjects.FindAsync(SubjectId);
+		}
+		else
+		{
+			Subject = await _context.Subjects.FirstOrDefaultAsync();
+		}
+
+		ShowSubject = Subject is not null;
+	}
+
 	public async Task OnGetAsync()
 	{
-		
+		await SetupVariables();
 		await PopulateTutorList();
 	}
 
 	public async Task<IActionResult> OnPostAsync()
 	{
-		ShowSubject = !Subject.IsNullOrEmpty();
+		await SetupVariables();
 		await PopulateTutorList();
 		return Page();
 	}
@@ -68,6 +84,10 @@ public class IndexModel : PageModel
 		WeekdayToUse = UseCustomTime ? CustomWeekDay : DateTime.Today.DayOfWeek;
 		var dateOnlyToUse = DateOnly.FromDateTime(DateTime.Now.GetNextWeekday(WeekdayToUse)); 
 		DateToUse = UseCustomTime ? new DateTime(dateOnlyToUse, TimeToUse) : DateTime.Now;
+		//add case for not showing subject
+
+		var confidences = Subject?.TutorConfidences;
+			
 		ActiveTutors = fullTutorList
 			.Where(t => DateToUse.OccursDuring(t.Weekday, t.StartTime, t.EndTime))
 			.Select(t => new DashboardDisplayRow
@@ -75,7 +95,7 @@ public class IndexModel : PageModel
 				TutorName = t.Tutor.DisplayName, 
 				ArrivalDisplay = t.StartTime.ToString(), 
 				DepartureString = t.EndTime.ToString(),
-				SubjectConfidence = ShowSubject ? 5 : null
+				SubjectConfidence = ShowSubject ? confidences?.FirstOrDefault(s => s.TutorId == t.TutorId)?.ConfidenceLevel : null
 			})
 			.OrderByDescending(r => r.SubjectConfidence)
 			.ToList();

@@ -7,7 +7,7 @@ public static class ComfortColors
     public static string GetColor(int? level)
     {
         if (level is null)
-            return "rgb(0, 0, 0)";
+            return "rgb(255, 255, 255)";
         int value = level.Value;
         int red = Interpolate(value, 10, 5, 0, 255);
         int green = Interpolate(value, 0, 5, 0, 255);
