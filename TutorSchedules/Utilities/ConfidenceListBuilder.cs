@@ -13,6 +13,7 @@ public class ConfidenceListBuilder
             .Where(tsc => tsc.TutorId == tutor.Id)
             .Select(tsc => new TutorComfortValues
             {
+                SubjectId = tsc.SubjectId,
                 Subject = tsc.Subject,
                 Confidence = tsc.ConfidenceLevel
             })

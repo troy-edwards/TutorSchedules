@@ -32,10 +32,9 @@ public class EditConfidences : PageModel
     {
         Tutor = await _context.Tutors.FindAsync(TutorId);
         var confidences = await _context.Confidences.Where(c => c.TutorId == Tutor.Id).ToListAsync();
-        for (int i = 0; i < ComfortLevels.Count; i++)
+        foreach (var comfort in ComfortLevels)
         {
-            var comfort = ComfortLevels[i];
-            var confidenceElement = confidences.Find(tsc => tsc.SubjectId == comfort.Subject.SubjectId);
+            var confidenceElement = confidences.Find(tsc => tsc.SubjectId == comfort.SubjectId);
             confidenceElement.ConfidenceLevel = comfort.Confidence;
             _context.Confidences.Attach(confidenceElement).State = EntityState.Modified;
         }

@@ -19,11 +19,11 @@
     
   @for (int i = 0; i < Model.ComfortLevels.Count; i++)
   {
-    var comfort = Model.ComfortLevels[i];int x = 5;
+    var comfort = Model.ComfortLevels[i];
     <tr>
       <td>@comfort.Subject.Name</td>
       <td style="background-color: @ComfortColors.GetColor(comfort.Confidence); border-radius: 5px;">
-        <input value="@comfort.Subject" asp-for="ComfortLevels[i].Subject" type="hidden">
+        <input value="@comfort.SubjectId" asp-for="ComfortLevels[i].SubjectId" type="hidden">
         <input value="@(comfort.Confidence is null ? "?" : comfort.Confidence.Value)" type="number" max="10" min="0" step="1" asp-for="ComfortLevels[i].Confidence"/>
       </td>
     </tr>
