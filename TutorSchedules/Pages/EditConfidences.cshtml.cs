@@ -19,12 +19,28 @@ public class EditConfidences : PageModel
     [BindProperty(SupportsGet = true)]
     public int TutorId { get; set; }
     public Tutor Tutor { get; set; }
-    public List<TutorComfortValues> ComfortLevels { get; set; }
+    [BindProperty] public List<TutorComfortValues> ComfortLevels { get; set; }
     
     
-    public async Task OnGet()
+    public async Task OnGetAsync()
     {
         Tutor = await _context.Tutors.FindAsync(TutorId);
         ComfortLevels = await ConfidenceListBuilder.GetConfidenceList(_context, Tutor);
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        Tutor = await _context.Tutors.FindAsync(TutorId);
+        var confidences = await _context.Confidences.Where(c => c.TutorId == Tutor.Id).ToListAsync();
+        for (int i = 0; i < ComfortLevels.Count; i++)
+        {
+            var comfort = ComfortLevels[i];
+            var confidenceElement = confidences.Find(tsc => tsc.SubjectId == comfort.Subject.SubjectId);
+            confidenceElement.ConfidenceLevel = comfort.Confidence;
+            _context.Confidences.Attach(confidenceElement).State = EntityState.Modified;
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToPage("/TutorDetails", new { TutorId = Tutor.Id });
     }
 }
