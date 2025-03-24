@@ -4,7 +4,7 @@
   <td>@Model.Id</td>
   <td>@Model.DisplayName</td>
   <td>
-    <a asp-page="TutorDetails" asp-route-TutorId="@Model.Id" class="btn btn-primary">View Schedule</a>
+    <a asp-page="TutorDetails" asp-route-TutorId="@Model.Id" class="btn btn-primary">View Details</a>
   </td>
   <td>
     <a asp-page="TutorProfile" asp-route-Id="@Model.Id" class="btn btn-primary">Edit Profile</a>
@@ -15,9 +15,6 @@
     </button>
   </td>
 </tr>
-
-
-
 <div class="modal fade" id="TutorDeleteConfirmation-@Model.Id" tabindex="-1" role="dialog" aria-labelledby="TutorDeleteConfirmationLabel-@Model.Id" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

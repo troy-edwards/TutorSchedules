@@ -1,0 +1,33 @@
+﻿@page "{TutorId:int}"
+@using TutorSchedules.Utilities
+@model EditConfidences
+
+@{
+  ViewData["Title"] = "Edit Confidences";
+}
+
+<h1>Edit Confidences for @Model.Tutor.DisplayName</h1>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Subject</th>
+    <th>Comfort</th>
+  </tr>
+  </thead>
+  <tbody>
+  <form method="post">
+    
+  @for (int i = 0; i < Model.ComfortLevels.Count; i++)
+  {
+    var comfort = Model.ComfortLevels[i];int x = 5;
+    <tr>
+      <td>@comfort.Subject.Name</td>
+      <td style="background-color: @ComfortColors.GetColor(comfort.Confidence); border-radius: 5px;">
+        <input value="@(comfort.Confidence is null ? "?" : comfort.Confidence.Value)" type="number" max="10" min="0" step="1"asp-for="ComfortLevels[i]"/>
+      </td>
+    </tr>
+  }
+  <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  </tbody>
+</table>
