@@ -14,8 +14,6 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: read 
-    env:
-      Azure_Connection_String ${{ secrets.Azure_Connection_String }}
 
     steps:
       - uses: actions/checkout@v4
