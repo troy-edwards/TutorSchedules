@@ -34,6 +34,9 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+          
+      - name: Apply Database Migrations
+        run: dotnet ef database update
 
   deploy:
     runs-on: windows-latest
