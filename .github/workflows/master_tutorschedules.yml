@@ -51,7 +51,7 @@ jobs:
         working-directory: TutorSchedules
 
       - name: Apply Database Migrations
-        run: dotnet ef database update --configuration Release -v --no-build --assembly TutorSchedules/bin/Release/net8.0/TutorSchedules.dll --project ./TutorSubjects/TutorSchedules.csproj --connection $Connection_String
+        run: dotnet ef database update --configuration Release -v --no-build --assembly TutorSchedules/bin/Release/net8.0/TutorSchedules.dll --project TutorSubjects/TutorSchedules.csproj --connection $Connection_String
         
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
