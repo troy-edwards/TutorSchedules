@@ -37,7 +37,7 @@ jobs:
         working-directory: TutorSchedules
 
       - name: Apply Database Migrations
-        run: dotnet ef database update -v --no-build --connection "${{ secrets.Azure_Connection_String }}" --project ./TutorSchedules.csproj --configuration Release
+        run: dotnet ef --project ./TutorSchedules.csproj --configuration Release database update -v --no-build --connection "${{ secrets.Azure_Connection_String }}"
         working-directory: TutorSchedules
         
       - name: dotnet publish
