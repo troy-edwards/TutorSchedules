@@ -30,7 +30,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Debug Connection String
-        run: echo "${{ env.AzureDbConnection }}"
+        run: echo "${{ env.SQLAZURECONNSTR_AzureDbConnection }}"
         working-directory: TutorSchedules
 
       - name: Apply Database Migrations
