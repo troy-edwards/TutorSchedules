@@ -26,6 +26,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Apply Database Migrations
+        run: dotnet ef database update
+        
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
@@ -35,8 +38,6 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
           
-      - name: Apply Database Migrations
-        run: dotnet ef database update
 
   deploy:
     runs-on: windows-latest
