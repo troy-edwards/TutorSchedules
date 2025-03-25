@@ -29,15 +29,9 @@ jobs:
       - name: Install EF Core CLI
         run: dotnet tool install --global dotnet-ef
 
-      - name: Print Directory Contents
-        run: ls
-
-      - name: Print Directory Contents in sub folder
-        run: ls
-        working-directory: TutorSchedules
-
       - name: Apply Database Migrations
-        run: dotnet ef database update --connection "${{ secrets.Azure_Connection_String }}" --project ./TutorSchedules
+        run: dotnet ef database update --connection "${{ secrets.Azure_Connection_String }}" --project TutorSchedules.csproj
+        working-directory: TutorSchedules
         
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
