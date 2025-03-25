@@ -29,9 +29,9 @@ jobs:
           dotnet-version: '8.x'
           
       - name: Set Connection String
-        run: echo $Connection_String
+        run: echo $ConnectionString
         env:
-          Connection_String: "${{ secrets.Azure_Connection_String }}"
+          ConnectionString: "${{ secrets.Azure_Connection_String }}"
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -51,7 +51,7 @@ jobs:
         working-directory: TutorSchedules
 
       - name: Apply Database Migrations
-        run: dotnet ef database update --configuration Release -v --no-build  --connection "$Connection_String"
+        run: dotnet ef database update --configuration Release -v --no-build  --connection "$ConnectionString"
         working-directory: TutorSchedules
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
