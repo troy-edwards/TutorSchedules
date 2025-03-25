@@ -30,7 +30,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Apply Database Migrations
-        run: dotnet ef database update -v --connection "${{ secrets.Azure_Connection_String }}" --project TutorSchedules/TutorSchedules.csproj
+        run: dotnet ef database update -v --connection --no-build "${{ secrets.Azure_Connection_String }}" --project TutorSchedules/TutorSchedules.csproj
         
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
