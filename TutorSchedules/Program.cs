@@ -10,7 +10,7 @@ builder.Services.AddDbContext<ScheduleContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString(
         builder.Environment.IsDevelopment() ? 
         "DefaultConnection" : 
-        Environment.GetEnvironmentVariable("SQLAZURECONNSTR_")
+        Environment.GetEnvironmentVariable("SQLAZURECONNSTR_AzureDbConnection")
         )));
 
 
