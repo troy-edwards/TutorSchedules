@@ -63,7 +63,8 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th>Subject</th>
+          <th>Subject Name</th>
+          <th>Subject Number</th>
           <th>Comfort</th>
         </tr>
         </thead>
@@ -72,6 +73,7 @@
           <tr>
 
             <td>@comfort.Subject.Name</td>
+            <td>@comfort.Subject.SubjectId</td>
             <td style="background-color: @ComfortColors.GetColor(comfort.Confidence); border-radius: 5px;">
               @(comfort.Confidence is null ? "?" : comfort.Confidence.Value)
             </td>

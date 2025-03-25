@@ -35,6 +35,7 @@ public class IndexModel : PageModel
 	public DateTime DateToUse { get; set; }
 	public List<DashboardDisplayRow>? ActiveTutors;
 	public bool ShowSubject { get; set; }
+	public SelectList SubjectList { get; set; }
 	public Subject? Subject { get; set; }
 	public IndexModel(ScheduleContext context)
 	{
@@ -45,15 +46,18 @@ public class IndexModel : PageModel
 	public async Task SetupVariables()
 	{
 		bool useInputSubject = !SubjectId.IsNullOrEmpty();
+		var subjectList = await _context.Subjects.Include(s => s.TutorConfidences).ToListAsync();
 		if (useInputSubject)
 		{
-			Subject = await _context.Subjects.FindAsync(SubjectId);
+			Subject = subjectList.Find(s => s.SubjectId == SubjectId);
 		}
 		else
 		{
-			Subject = await _context.Subjects.FirstOrDefaultAsync();
+			Subject = subjectList.FirstOrDefault();
 		}
 
+		SubjectList = new SelectList(subjectList, nameof(Models.Subject.SubjectId), nameof(Models.Subject.Name),
+			Subject); 
 		ShowSubject = Subject is not null;
 	}
 

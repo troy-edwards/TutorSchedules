@@ -10,8 +10,8 @@
 <div class="container">
   <div class="row">
     <form method="post" class="shadow-lg p-3" >
-      <label asp-for="SubjectId">SubjectId:</label>
-      <input asp-for="SubjectId" type="text" value="College Algebra"/>
+      <label asp-for="SubjectId">Subject:</label>
+      <select asp-for="SubjectId" asp-items="Model.SubjectList" type="text" value="@Model.Subject?.Name"></select>
       <div class="form-check form-switch my-2">
         <label class="form-check-label" asp-for="UseCustomTime">Use Custom Time? </label>
         <input asp-for="UseCustomTime" class="form-check-input" type="checkbox" id="CustomTimeVisible"/>
