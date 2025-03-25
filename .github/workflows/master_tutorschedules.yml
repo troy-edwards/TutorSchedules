@@ -29,6 +29,10 @@ jobs:
       - name: Install EF Core CLI
         run: dotnet tool install --global dotnet-ef
 
+      - name: Debug Connection String
+        run: echo "${{ env.AzureDbConnection }}"
+        working-directory: TutorSchedules
+
       - name: Apply Database Migrations
         run: dotnet ef database update
         working-directory: TutorSchedules
