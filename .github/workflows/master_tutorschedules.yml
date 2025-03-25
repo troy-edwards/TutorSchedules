@@ -35,6 +35,9 @@ jobs:
       - name: Print Sub File Contents
         run: ls
         working-directory: TutorSchedules
+        
+      - name: Echo Connection String
+        run: echo "${{ secrets.Azure_Connection_String }}"
 
       - name: Apply Database Migrations
         run: dotnet ef --configuration Release database update -v --no-build --connection "${{ secrets.Azure_Connection_String }}"
