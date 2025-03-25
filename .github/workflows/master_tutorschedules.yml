@@ -28,6 +28,7 @@ jobs:
 
       - name: Apply Database Migrations
         run: dotnet ef database update
+        working-directory: TutorSchedules
         
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
