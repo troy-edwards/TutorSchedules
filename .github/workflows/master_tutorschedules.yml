@@ -31,7 +31,7 @@ jobs:
       - name: Set Connection String
         env:
           ConnectionString: ${{ secrets.AZURE_CONNECTION_STRING }}
-        run: echo ${{ env.ConnectionString }}
+        run: echo '${{ env.ConnectionString }}'
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -40,7 +40,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
         
       - name: Apply Database Migrations
-        run: dotnet ef database update --configuration Release -v --no-build  --connection "${{env.ConnectionString}}"
+        run: dotnet ef database update --configuration Release -v --no-build  --connection '${{env.ConnectionString}}'
         working-directory: TutorSchedules
         
       - name: dotnet publish
