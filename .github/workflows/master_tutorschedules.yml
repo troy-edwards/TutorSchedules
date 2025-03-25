@@ -26,6 +26,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
       - name: Apply Database Migrations
         run: dotnet ef database update
         working-directory: TutorSchedules
