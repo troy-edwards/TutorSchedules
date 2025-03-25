@@ -14,6 +14,8 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: read 
+    env:
+      Azure_Connection_String ${{ secrets.Azure_Connection_String }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,11 +32,11 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Debug Connection String
-        run: echo "${{ env.SQLAZURECONNSTR_AzureDbConnection }}"
+        run: echo "${{ secrets.Azure_Connection_String }}"
         working-directory: TutorSchedules
 
       - name: Apply Database Migrations
-        run: dotnet ef database update
+        run: dotnet ef database update --connection "${{ secrets.Azure_Connection_String }}
         working-directory: TutorSchedules
         
       - name: dotnet publish
