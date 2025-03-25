@@ -12,8 +12,8 @@ using TutorSchedules.Data;
 namespace TutorSchedules.Migrations
 {
     [DbContext(typeof(ScheduleContext))]
-    [Migration("20250323233617_AddedTutorSubjectConfidenceTable")]
-    partial class AddedTutorSubjectConfidenceTable
+    [Migration("20250325041837_RebuildingSchema")]
+    partial class RebuildingSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

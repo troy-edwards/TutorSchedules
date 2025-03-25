@@ -22,7 +22,7 @@ namespace TutorSchedules.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TutorSchedules.Models.SubjectId", b =>
+            modelBuilder.Entity("TutorSchedules.Models.Subject", b =>
                 {
                     b.Property<string>("SubjectId")
                         .HasColumnType("nvarchar(450)");
@@ -122,7 +122,7 @@ namespace TutorSchedules.Migrations
 
             modelBuilder.Entity("TutorSchedules.Models.TutorSubjectConfidence", b =>
                 {
-                    b.HasOne("TutorSchedules.Models.SubjectId", "SubjectId")
+                    b.HasOne("TutorSchedules.Models.Subject", "Subject")
                         .WithMany("TutorConfidences")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -134,12 +134,12 @@ namespace TutorSchedules.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SubjectId");
+                    b.Navigation("Subject");
 
                     b.Navigation("Tutor");
                 });
 
-            modelBuilder.Entity("TutorSchedules.Models.SubjectId", b =>
+            modelBuilder.Entity("TutorSchedules.Models.Subject", b =>
                 {
                     b.Navigation("TutorConfidences");
                 });
