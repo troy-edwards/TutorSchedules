@@ -33,11 +33,8 @@ jobs:
         run: echo "${{ secrets.Azure_Connection_String }}"
         working-directory: TutorSchedules
 
-      - name: Change directory
-        run: cd TutorSchedules
-    
       - name: Apply Database Migrations
-        run: dotnet ef database update --connection "${{ secrets.Azure_Connection_String }}"
+        run: dotnet ef database update --connection "${{ secrets.Azure_Connection_String }}" --project ./TutorSchedules
         
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
