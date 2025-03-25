@@ -51,7 +51,7 @@ jobs:
         working-directory: TutorSchedules
 
       - name: Apply Database Migrations
-        run: dotnet ef database update --configuration Release -v --no-build  --connection $Connection_String --context "*"
+        run: dotnet ef database update --configuration Release -v --no-build  --connection "$Connection_String"
         working-directory: TutorSchedules
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
