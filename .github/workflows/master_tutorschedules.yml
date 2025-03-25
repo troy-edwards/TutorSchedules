@@ -31,7 +31,7 @@ jobs:
       - name: Set Connection String
         env:
           ConnectionString: ${{ secrets.AZURE_CONNECTION_STRING }}
-        run: echo "$ConnectionString"
+        run: echo ${{ env.ConnectionString }}
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
