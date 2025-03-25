@@ -31,7 +31,7 @@ jobs:
 
       - name: Apply Database Migrations
         run: dotnet ef database update -v --no-build --connection "${{ secrets.Azure_Connection_String }}" --context "*"
-        
+        working-directory: TutorSchedules
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
