@@ -29,7 +29,7 @@ jobs:
           dotnet-version: '8.x'
           
       - name: Set Connection String
-        run: echo $ConnectionString
+        run: echo '$ConnectionString"
         env:
           ConnectionString: ${{ secrets.AZURE_CONNECTION_STRING }}
 
@@ -39,17 +39,6 @@ jobs:
       - name: Install EF Core CLI
         run: dotnet tool install --global dotnet-ef
         
-      - name: Print Root Contents
-        run: ls
-        
-      - name: Print Sub File Contents
-        run: ls
-        working-directory: TutorSchedules
-
-      - name: Cat csproj file
-        run: cat TutorSchedules.csproj
-        working-directory: TutorSchedules
-
       - name: Apply Database Migrations
         run: dotnet ef database update --configuration Release -v --no-build  --connection "$ConnectionString"
         working-directory: TutorSchedules
