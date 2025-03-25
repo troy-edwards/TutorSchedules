@@ -44,12 +44,16 @@ public class EditSubject : PageModel
             return RedirectToPage("/Shenanigans");
         if (CourseId is null)
         {
-            if (_context.Subjects.Any(s => s.SubjectId == Subject.SubjectId))
+            var subjects = await _context.Subjects.ToListAsync();
+            if (subjects.Any(s => s.SubjectId == Subject.SubjectId))
             {
                 ModelState.AddModelError("SubjectId.CourseId", "A subject with that course id already exists.");
                 return Page();
             }
 
+            int largestCount = subjects.Count == 0 ? 0 : subjects.Max(s => s.Order);
+            Subject.Order = largestCount + 1;
+            Subject.SubjectId = Subject.SubjectId.ToUpper();
             await AddNewConfidencesToSubject();
             _context.Subjects.Add(Subject);
 
