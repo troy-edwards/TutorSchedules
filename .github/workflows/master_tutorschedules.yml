@@ -29,7 +29,7 @@ jobs:
           dotnet-version: '8.x'
           
       - name: Set Connection String
-        run: echo '$ConnectionString"
+        run: echo "$ConnectionString"
         env:
           ConnectionString: ${{ secrets.AZURE_CONNECTION_STRING }}
 
