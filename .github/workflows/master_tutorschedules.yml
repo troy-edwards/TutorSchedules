@@ -19,19 +19,30 @@ jobs:
     steps:
       - name: Purge az cache
         run: az cache purge
-
         
       - uses: actions/checkout@v4
         
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      
-      - name: Set Subscription
-        run: az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az group show --name "Group1"
+            # You can write your Azure CLI inline scripts here.
+
+      - name: Azure PowerShell action
+        uses: azure/powershell@v2
+        with:
+          azPSVersion: latest
+          inlineScript: |
+            Get-AzResourceGroup -Name "Group1"
+            # You can write your Azure PowerShell inline scripts here.
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
