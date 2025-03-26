@@ -16,14 +16,8 @@ jobs:
       contents: read 
       id-token: write
 
-    steps:
-      - name: Purge az cache
-        run: az cache purge
-        
+    steps:        
       - uses: actions/checkout@v4
-        
-      - name: Azure Login
-        run: az login --tenant ${{ secrets.AZURE_TENANT_ID }} --allow-no-subscriptions
         
 #      - name: Azure Login
 #        uses: azure/login@v2
@@ -57,10 +51,6 @@ jobs:
 
       - name: Install EF Core CLI
         run: dotnet tool install --global dotnet-ef
-        
-      - name: Apply Database Migrations
-        run: dotnet ef database update --configuration Release -v --no-build  --connection '${{ secrets.AZURE_CONNECTION_STRING }}'
-        working-directory: TutorSchedules
         
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
