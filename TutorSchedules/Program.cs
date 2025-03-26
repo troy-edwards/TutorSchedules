@@ -6,13 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddDbContext<ScheduleContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString(
-        builder.Environment.IsDevelopment() ? 
-        "DefaultConnection" : 
-        Environment.GetEnvironmentVariable("SQLAZURECONNSTR_AzureDbConnection")
-        )));
+var connectionString = builder.Environment.IsDevelopment()
+    ? builder.Configuration.GetConnectionString("DefaultConnection")
+    : Environment.GetEnvironmentVariable("SQLAZURECONNSTR_AzureDbConnection");
 
+builder.Services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
