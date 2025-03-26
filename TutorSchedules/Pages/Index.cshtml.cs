@@ -46,7 +46,7 @@ public class IndexModel : PageModel
 	public async Task SetupVariables()
 	{
 		bool useInputSubject = !SubjectId.IsNullOrEmpty();
-		var subjectList = await _context.Subjects.Include(s => s.TutorConfidences).ToListAsync();
+		var subjectList = await _context.Subjects.Include(s => s.TutorConfidences).OrderBy(s => s.Order).ToListAsync();
 		if (useInputSubject)
 		{
 			Subject = subjectList.Find(s => s.SubjectId == SubjectId);

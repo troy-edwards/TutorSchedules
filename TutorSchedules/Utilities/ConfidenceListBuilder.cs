@@ -11,6 +11,7 @@ public class ConfidenceListBuilder
         return await context.Confidences
             .Include(tsc => tsc.Subject)
             .Where(tsc => tsc.TutorId == tutor.Id)
+            .OrderBy(tsc => tsc.Subject.Order)
             .Select(tsc => new TutorComfortValues
             {
                 SubjectId = tsc.SubjectId,
