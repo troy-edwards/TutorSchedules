@@ -19,9 +19,9 @@ jobs:
     steps:
       - name: Purge az cache
         run: az cache purge
-      
-      - name: Azure login
-        run: az login
+
+      - name: Set Subscription
+        run: az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         
       - uses: actions/checkout@v4
       - uses: azure/login@v2
