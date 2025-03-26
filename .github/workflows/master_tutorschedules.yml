@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         
       - name: Azure Login
-        run: az login --allow-no-subscriptions
+        run: az login --tenant ${{ secrets.AZURE_TENANT_ID }} --allow-no-subscriptions
         
 #      - name: Azure Login
 #        uses: azure/login@v2
