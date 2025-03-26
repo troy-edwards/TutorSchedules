@@ -17,6 +17,9 @@ jobs:
       id-token: write
 
     steps:
+      - name: Purge and Logout
+        run: az cache purge; az logout
+        
       - uses: actions/checkout@v4
       - uses: azure/login@v2
         with:
