@@ -60,9 +60,6 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
-      - name: logout
-        run: |
-          az logout
           
 
   deploy:
