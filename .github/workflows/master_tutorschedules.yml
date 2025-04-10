@@ -64,18 +64,9 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_398948F8E77A4C4C997B7AF72964AC19 }}
 
       - name: Deploy math to Azure Web App
-        id: deploy-to-webapp-math
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'TutorSchedules'
           slot-name: 'Production'
           package: .
-          
-      - name: Deploy ware to Azure Web App
-        id: deploy-to-webapp-ware
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'TeamWare'
-          slot-name: 'Production'
-          package: .
-          
