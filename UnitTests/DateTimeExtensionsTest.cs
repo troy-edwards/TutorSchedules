@@ -59,14 +59,14 @@ public class DateTimeExtensionsTest
     }
 
     [Test]
-    public void OccursDuring_TimeExactlyAtEndReturnsTrue()
+    public void OccursDuring_TimeExactlyAtEndReturnsFalse()
     {
         bool answer = _saturday7Am.OccursDuring(
             DayOfWeek.Saturday, 
             new TimeOnly(6, 0), 
             new TimeOnly(7, 0));
         
-        Assert.True(answer);
+        Assert.False(answer);
     }
 
     [Test]

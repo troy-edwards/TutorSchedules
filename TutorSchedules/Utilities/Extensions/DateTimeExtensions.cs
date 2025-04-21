@@ -11,7 +11,7 @@ public static class DateTimeExtensions
         var givenTime = TimeOnly.FromDateTime(givenDate);
         if (givenTime < startTime)
             return false;
-        if (givenTime > endTime)
+        if (givenTime >= endTime)
             return false;
         return true;
     }
