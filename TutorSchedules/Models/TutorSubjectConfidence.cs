@@ -9,8 +9,7 @@ public class TutorSubjectConfidence
     [Required]
     public int TutorId { get; set; }
     public Tutor? Tutor { get; set; }
-    [Required]
-    public string SubjectId { get; set; }
+    [Required] public string SubjectId { get; set; } = "";
     public Subject? Subject { get; set; }
     
     public int? ConfidenceLevel { get; set; }

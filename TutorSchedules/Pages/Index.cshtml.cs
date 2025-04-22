@@ -35,7 +35,7 @@ public class IndexModel : PageModel
 	public DateTime DateToUse { get; set; }
 	public List<DashboardDisplayRow>? ActiveTutors;
 	public bool ShowSubject { get; set; }
-	public SelectList SubjectList { get; set; }
+	public SelectList? SubjectList { get; set; }
 	public Subject? Subject { get; set; }
 	public IndexModel(ScheduleContext context)
 	{

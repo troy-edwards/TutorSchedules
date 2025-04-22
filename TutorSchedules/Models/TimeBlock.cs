@@ -18,7 +18,7 @@ public class TimeBlock
     
     [Required]
     public int TutorId { get; set; }
-    [JsonIgnore] public Tutor Tutor { get; set; }
+    [JsonIgnore] public Tutor? Tutor { get; set; }
 
     [Required]
     public DayOfWeek Weekday { get; set; }
