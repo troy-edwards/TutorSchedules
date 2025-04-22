@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using Microsoft.IdentityModel.Tokens;
 using TutorSchedules.Models;
 
 namespace TutorSchedules.Utilities;
@@ -63,7 +63,7 @@ public class ScheduleReader
 
     private static string[] SplitColumns(string row, int rowNumber)
     {
-        if (row is null)
+        if (row.IsNullOrEmpty())
             throw new FormatException($"A row can not be null. Row {rowNumber + 1} is null.");
         var columns = row.Split(",");
         return columns;
@@ -86,10 +86,9 @@ public class ScheduleReader
 
     private int GetTutorIdFromName(string name)
     {
-        if (!_nameToId.ContainsKey(name))
+        if (!_nameToId.TryGetValue(name, out var tutorId))
             throw new FormatException(
                 $"{name} is on the schedule, but not in the tutor list. Their display name must match what is on the schedule.");
-        int tutorId = _nameToId[name];
         return tutorId;
     }
 

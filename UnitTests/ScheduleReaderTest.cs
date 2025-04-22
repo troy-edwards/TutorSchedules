@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using NUnit.Framework.Internal;
-using TutorSchedules.Models;
-using TutorSchedules.Utilities;
+﻿using TutorSchedules.Utilities;
 
 namespace UnitTests;
 
@@ -37,7 +34,7 @@ public class ScheduleReaderTest
     [Test]
     public void ExtractScheduleReturnsAList()
     {
-        Assert.That(_scheduleReader.ExtractSchedule() is List<TimeBlock>);
+        Assert.That(_scheduleReader.ExtractSchedule() is not null);
     }
     
     [Test]
@@ -57,9 +54,9 @@ public class ScheduleReaderTest
     }
 
     [Test]
-    public void ANullRowThrowsException()
+    public void EmptyRowThrowsException()
     {
-        _testLines.Add(null);
+        _testLines.Add(string.Empty);
         _scheduleReader = new ScheduleReader(_testLines, _testNamesToId);
         Assert.Throws<FormatException>(() => _scheduleReader.ExtractSchedule());
     }

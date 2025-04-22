@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TutorSchedules.Models;
 
@@ -17,7 +18,7 @@ public class TimeBlock
     
     [Required]
     public int TutorId { get; set; }
-    public Tutor Tutor { get; set; }
+    [JsonIgnore] public Tutor Tutor { get; set; }
 
     [Required]
     public DayOfWeek Weekday { get; set; }

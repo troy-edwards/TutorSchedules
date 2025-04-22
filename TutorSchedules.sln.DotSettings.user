@@ -3,5 +3,6 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.ComfortColorsTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.DateTimeExtensionsTest.OccursDuring_TimeExactlyAtEndReturnsFalse&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.ScheduleReaderTest.EmptyRowThrowsException&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
