@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using TutorSchedules.Data;
 using TutorSchedules.Models;
 
-namespace TutorSchedules.Controllers;
+namespace TutorSchedules.Controllers.v1;
 
-[Route("tutortimeblocks")]
+[Route("v1/time-blocks")]
 [ApiController]
-public class TutorTimeBlocksController
+public class TimeBlockController
 {
     private readonly ScheduleContext _context;
 
-    public TutorTimeBlocksController(ScheduleContext context)
+    public TimeBlockController(ScheduleContext context)
     {
         _context = context;
     }
