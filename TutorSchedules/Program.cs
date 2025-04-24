@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
 
 var connectionString = builder.Environment.IsDevelopment()
     ? builder.Configuration.GetConnectionString("DefaultConnection")
@@ -18,6 +19,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseWebAssemblyDebugging();
 }
 else
 {
@@ -25,6 +27,9 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseBlazorFrameworkFiles();
+app.MapFallbackToFile("index.html");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -35,5 +40,6 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+app.MapBlazorHub();
 app.UseStatusCodePagesWithRedirects("/errors/{0}");
 app.Run();
