@@ -5,7 +5,7 @@ using TutorSchedules.Models;
 
 namespace TutorSchedules.Controllers.v1;
 
-[Route("v1/time-blocks")]
+[Route("v1/active-time-blocks")]
 [ApiController]
 public class TimeBlockController
 {

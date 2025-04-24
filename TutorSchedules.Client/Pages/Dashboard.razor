@@ -1,6 +1,49 @@
 ﻿@page "/Dashboard"
-<h3>Dashboard</h3>
+@using TutorSchedules.Models
+@inject NavigationManager _navigation;
+@inject HttpClient _httpClient;
+
+
+@if (DataStillBeingLoaded())
+{
+  <p>Loading...</p> 
+}
+else
+{
+  <div class="container">
+    <div class="row">
+      <div class="col shadow-lg p-3">
+        <label></label>
+      </div>
+    </div>
+  </div>
+}
 
 @code {
+  List<Tutor>? _tutors;
+  List<Subject>? _subjects;
+  List<TutorSubjectConfidence>? _confidences;
+  List<TimeBlock>? _activeTimeBlocks;
+
+  bool DataStillBeingLoaded()
+  {
+    return _tutors is null || 
+             _subjects is null ||
+             _confidences is null ||
+             _activeTimeBlocks is null;
+  }
   
+  protected override async Task OnInitializedAsync()
+  {
+    await InitializeLists();
+  }
+
+  private async Task InitializeLists()
+  {
+    _tutors = await _httpClient.GetFromJsonAsync<List<Tutor>>(_navigation.BaseUri + "v1/tutors");
+    _subjects = await _httpClient.GetFromJsonAsync<List<Subject>>(_navigation.BaseUri + "v1/subjects");
+    _confidences = await _httpClient.GetFromJsonAsync<List<TutorSubjectConfidence>>(_navigation.BaseUri + "v1/confidences");
+    _activeTimeBlocks = await _httpClient.GetFromJsonAsync<List<TimeBlock>>(_navigation.BaseUri + "v1/active-time-blocks");
+  }
+
 }
