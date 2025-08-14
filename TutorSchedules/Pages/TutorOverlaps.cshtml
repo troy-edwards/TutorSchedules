@@ -1,19 +1,37 @@
 ﻿@page "{TutorId:int}"
+@using TutorSchedules.Utilities.Extensions
 @model TutorSchedules.Pages.TutorOverlaps
 
 @{
     ViewData["Title"] = $"Overlapping Tutors For {Model.Tutor.DisplayName}";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary" asp-page="/TutorDetails" asp-route-TutorId="@Model.TutorId">Back to Details</a>
+        </div>
+    </div>
+    <div class="row">
+        <h1>Tutors that overlap with @Model.Tutor.DisplayName:</h1>
+    </div>
+    <div class="row">
+        <div class="col col-2 text-center shadow rounded" style="min-width: 200px;">
+            <table class="table table-hover">
+                <thead>
+                <th>Tutor</th>
+                <th>Time With @Model.Tutor.DisplayName</th>
+                </thead>
+                <tbody>
+                @foreach (OverlapDisplay tutorOverlap in Model.OverlapDisplays)
+                {
+                    <tr>
+                        <td>@tutorOverlap.Tutor.DisplayName</td>
+                        <td>@tutorOverlap.Overlap.ReadableDisplay()</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-</body>
-</html>

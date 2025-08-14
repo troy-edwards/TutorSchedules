@@ -39,4 +39,14 @@ public static class DateTimeExtensions
             difference += 7;
         return givenDateTime.AddDays(difference);
     }
+
+    public static string ReadableDisplay(this TimeSpan span)
+    {
+        if (span == TimeSpan.Zero)
+            return "0h";
+        string answer = "";
+        answer += span.Hours > 0 ? $"{span.Hours}h " : "";
+        answer += span.Minutes > 0 ? $"{span.Minutes}h " : "";
+        return answer;
+    }
 }
