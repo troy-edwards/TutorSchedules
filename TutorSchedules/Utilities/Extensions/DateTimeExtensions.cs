@@ -46,7 +46,7 @@ public static class DateTimeExtensions
             return "0h";
         string answer = "";
         answer += span.Hours > 0 ? $"{span.Hours}h " : "";
-        answer += span.Minutes > 0 ? $"{span.Minutes}h " : "";
+        answer += span.Minutes > 0 ? $"{span.Minutes}m " : "";
         return answer;
     }
 }
