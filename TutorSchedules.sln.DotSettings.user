@@ -1,8 +1,18 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=88090f92_002D7534_002D428d_002D84ac_002D2bd150281ceb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestConstructor" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=88090f92_002D7534_002D428d_002D84ac_002D2bd150281ceb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestConstructor" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.ComfortColorsTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.DateTimeExtensionsTest.OccursDuring_TimeExactlyAtEndReturnsFalse&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.ScheduleReaderTest.EmptyRowThrowsException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.TimeBlockTests.TimespansCanAdd&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c5f559aa_002Dfcb1_002D4607_002Db729_002Da7a584266223/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TimespansCanAdd" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Not&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.ComfortColorsTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.DateTimeExtensionsTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::687E2A07-740B-4B04-8B77-EAE8CE23F3F7::net8.0::UnitTests.ScheduleReaderTest&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+  &lt;/Not&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

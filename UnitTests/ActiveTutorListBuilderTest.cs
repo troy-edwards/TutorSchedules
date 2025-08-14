@@ -61,9 +61,4 @@ public class ActiveTutorListBuilderTest
     {
         _context.Dispose();
     }
-
-    [Test]
-    public void CanISubstitute()
-    {
-    }
 }
