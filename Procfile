@@ -1,1 +1,1 @@
-web: cd TutorSchedules && dotnet TutorSchedules.dll
+web: cd $HOME/TutorSchedules && $HOME/.dotnet/dotnet TutorSchedules.dll
