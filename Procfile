@@ -1,1 +1,1 @@
-web: cd TutorSchedules && ./TutorSchedules
+web: cd $HOME/heroku_output && ./TutorSchedules
