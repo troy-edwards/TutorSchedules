@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace TutorSchedules.Migrations
 {
     /// <inheritdoc />
-    public partial class RebuildingSchema : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +16,9 @@ namespace TutorSchedules.Migrations
                 name: "Subjects",
                 columns: table => new
                 {
-                    SubjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    SubjectId = table.Column<string>(type: "text", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,8 +29,8 @@ namespace TutorSchedules.Migrations
                 name: "Tutors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    DisplayName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,11 +41,11 @@ namespace TutorSchedules.Migrations
                 name: "Confidences",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TutorId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ConfidenceLevel = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TutorId = table.Column<int>(type: "integer", nullable: false),
+                    SubjectId = table.Column<string>(type: "text", nullable: false),
+                    ConfidenceLevel = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,12 +68,12 @@ namespace TutorSchedules.Migrations
                 name: "ScheduleBlocks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TutorId = table.Column<int>(type: "int", nullable: false),
-                    Weekday = table.Column<int>(type: "int", nullable: false),
-                    StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeOnly>(type: "time", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TutorId = table.Column<int>(type: "integer", nullable: false),
+                    Weekday = table.Column<int>(type: "integer", nullable: false),
+                    StartTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false)
                 },
                 constraints: table =>
                 {

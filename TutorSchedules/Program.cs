@@ -3,14 +3,40 @@ using TutorSchedules.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel to use Heroku's PORT environment variable
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5253";
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(port));
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-var connectionString = builder.Environment.IsDevelopment()
-    ? builder.Configuration.GetConnectionString("DefaultConnection")
-    : Environment.GetEnvironmentVariable("SQLAZURECONNSTR_AzureDbConnection");
+// Get connection string - parse Heroku DATABASE_URL if in production
+string? connectionString;
+if (builder.Environment.IsDevelopment())
+{
+    connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+}
+else
+{
+    // Heroku provides DATABASE_URL in format: postgres://user:password@host:port/database
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (!string.IsNullOrEmpty(databaseUrl))
+    {
+        var uri = new Uri(databaseUrl);
+        var username = uri.UserInfo.Split(':')[0];
+        var password = uri.UserInfo.Split(':')[1];
+        connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.LocalPath.TrimStart('/')};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+    }
+    else
+    {
+        throw new InvalidOperationException("DATABASE_URL environment variable is not set");
+    }
+}
 
-builder.Services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ScheduleContext>(options => options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
