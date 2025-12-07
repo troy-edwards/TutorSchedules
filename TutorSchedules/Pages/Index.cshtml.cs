@@ -84,10 +84,14 @@ public class IndexModel : PageModel
 
 	private void BuildActiveListFromBlocks(List<TimeBlock> fullTutorList)
 	{
-		TimeToUse = UseCustomTime ? CustomTime : TimeOnly.FromDateTime(DateTime.Now);
-		WeekdayToUse = UseCustomTime ? CustomWeekDay : DateTime.Today.DayOfWeek;
-		var dateOnlyToUse = DateOnly.FromDateTime(DateTime.Now.GetNextWeekday(WeekdayToUse)); 
-		DateToUse = UseCustomTime ? new DateTime(dateOnlyToUse, TimeToUse) : DateTime.Now;
+		// Convert UTC to Central Time
+		var centralZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
+		var centralNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, centralZone);
+		
+		TimeToUse = UseCustomTime ? CustomTime : TimeOnly.FromDateTime(centralNow);
+		WeekdayToUse = UseCustomTime ? CustomWeekDay : centralNow.DayOfWeek;
+		var dateOnlyToUse = DateOnly.FromDateTime(centralNow.GetNextWeekday(WeekdayToUse)); 
+		DateToUse = UseCustomTime ? new DateTime(dateOnlyToUse, TimeToUse) : centralNow;
 		//add case for not showing subject
 
 		var confidences = Subject?.TutorConfidences;
