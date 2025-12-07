@@ -40,6 +40,15 @@ builder.Services.AddDbContext<ScheduleContext>(options => options.UseNpgsql(conn
 
 var app = builder.Build();
 
+// Apply pending migrations in production (safe for new deployments and schema updates)
+if (!app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ScheduleContext>();
+        db.Database.Migrate();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
