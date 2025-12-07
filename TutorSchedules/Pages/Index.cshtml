@@ -26,7 +26,7 @@
     </form>
   </div>
   <div class="row shadow-lg my-4 p-3">
-    <h1>@Model.ActiveTutors.Count Tutors available at @Model.TimeToUse on @Model.WeekdayToUse</h1>
+    <h1>@Model.ActiveTutors.Count Tutors available at @Model.TimeToUse.ToString("h:mm tt") on @Model.WeekdayToUse</h1>
     <div class="col">
       <table class="table table-hover">
         <thead>
