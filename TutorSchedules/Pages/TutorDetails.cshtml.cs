@@ -11,7 +11,10 @@ public class TutorDetails : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public int TutorId { get; set; }
+    
+    [BindProperty]
     public Tutor Tutor { get; set; }
+    
     public List<TutorComfortValues> ComfortValues { get; set; }
     public ICollection<TimeBlock>? ScheduledTimes { get; set; }
     private ScheduleContext _context;
@@ -30,5 +33,20 @@ public class TutorDetails : PageModel
         ScheduledTimes = Tutor.ScheduledTimes;
         ComfortValues = await ConfidenceListBuilder.GetConfidenceList(_context, Tutor);
         return Page();
+    }
+    
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+            return Page();
+            
+        var existingTutor = await _context.Tutors.FindAsync(TutorId);
+        if (existingTutor is null)
+            return RedirectToPage("/TutorNotFound");
+            
+        existingTutor.DisplayName = Tutor.DisplayName;
+        await _context.SaveChangesAsync();
+        
+        return RedirectToPage("/TutorDetails", new { TutorId });
     }
 }
