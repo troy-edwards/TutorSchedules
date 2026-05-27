@@ -1,5 +1,10 @@
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using TutorSchedules.Data;
+
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 var builder = WebApplication.CreateBuilder(args);
 

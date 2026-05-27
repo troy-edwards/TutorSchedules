@@ -1,0 +1,63 @@
+@page
+@using TutorSchedules.Utilities
+@model TutorSchedules.Pages.CourseComfortLevels
+@{
+  ViewData["Title"] = "Course Comfort Levels";
+}
+<div class="container">
+  <div class="row mb-3">
+    <h1>Course Comfort Levels</h1>
+  </div>
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <form method="get">
+        <div class="input-group">
+          <label class="input-group-text" for="subjectSelect">Course:</label>
+          <select id="subjectSelect" name="subjectId" class="form-select"
+                  asp-items="Model.SubjectOptions" onchange="this.form.submit()">
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+  @if (Model.SelectedSubject is not null && Model.TutorConfidences.Any())
+  {
+    <div class="row">
+      <div class="col">
+        <h4 class="text-decoration-underline">
+          @Model.SelectedSubject.SubjectId &mdash; @Model.SelectedSubject.Name
+        </h4>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>Tutor</th>
+            <th>Comfort Level</th>
+          </tr>
+          </thead>
+          <tbody>
+          @foreach (var (tutor, confidence) in Model.TutorConfidences)
+          {
+            <tr>
+              <td>
+                <a asp-page="/TutorDetails" asp-route-TutorId="@tutor.Id">@tutor.DisplayName</a>
+              </td>
+              <td style="background-color: @ComfortColors.GetColor(confidence); border-radius: 5px;">
+                @(confidence is null ? "?" : confidence.Value)
+              </td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+  else if (Model.SelectedSubject is null)
+  {
+    <p class="text-muted">No courses available. Add subjects on the <a asp-page="/Settings">Settings</a> page.</p>
+  }
+  <div class="row mt-3">
+    <div class="col">
+      <a class="btn btn-secondary" asp-page="/Settings">Back to Settings</a>
+    </div>
+  </div>
+</div>
