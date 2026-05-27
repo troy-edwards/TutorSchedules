@@ -19,6 +19,9 @@ public class CourseComfortLevels : PageModel
     [BindProperty(SupportsGet = true)]
     public string? SubjectId { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public string SortBy { get; set; } = "score";
+
     public List<SelectListItem> SubjectOptions { get; set; } = new();
     public Subject? SelectedSubject { get; set; }
 
@@ -44,16 +47,24 @@ public class CourseComfortLevels : PageModel
         {
             SelectedSubject = subjects.FirstOrDefault(s => s.SubjectId == SubjectId);
 
-            var tutors = await _context.Tutors.OrderBy(t => t.DisplayName).ToListAsync();
+            var tutors = await _context.Tutors.ToListAsync();
             var confidences = await _context.Confidences
                 .Where(c => c.SubjectId == SubjectId)
                 .ToListAsync();
 
-            TutorConfidences = tutors.Select(t =>
+            var combined = tutors.Select(t =>
             {
                 var conf = confidences.FirstOrDefault(c => c.TutorId == t.Id);
                 return (t, conf?.ConfidenceLevel);
-            }).ToList();
+            });
+
+            TutorConfidences = SortBy == "alpha"
+                ? combined.OrderBy(x => x.t.DisplayName).ToList()
+                : combined
+                    .OrderByDescending(x => x.ConfidenceLevel.HasValue)   // nulls last
+                    .ThenByDescending(x => x.ConfidenceLevel)              // highest first
+                    .ThenBy(x => x.t.DisplayName)                          // alpha tiebreak
+                    .ToList();
         }
 
         return Page();
