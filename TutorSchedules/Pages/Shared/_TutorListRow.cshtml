@@ -1,7 +1,7 @@
 ﻿@model TutorSchedules.Models.Tutor
 
 <tr>
-  <td>@Model.Id</td>
+  <td>@Model.Id.ToDisplayId()</td>
   <td>@Model.DisplayName</td>
   <td>
     <a asp-page="TutorDetails" asp-route-TutorId="@Model.Id" class="btn btn-primary">View/Edit</a>
