@@ -34,6 +34,7 @@ public class IndexModel : PageModel
 	public DayOfWeek WeekdayToUse { get; set; }
 	public DateTime DateToUse { get; set; }
 	public List<DashboardDisplayRow>? ActiveTutors;
+	public List<OutOfCenterDisplayRow> OutOfCenterTutors = new();
 	public bool ShowSubject { get; set; }
 	public SelectList? SubjectList { get; set; }
 	public Subject? Subject { get; set; }
@@ -79,10 +80,11 @@ public class IndexModel : PageModel
 	{
 		var fullTutorList =
 			await _context.ScheduleBlocks.Include(b => b.Tutor).ToListAsync();
-		BuildActiveListFromBlocks(fullTutorList);
+		var outOfCenterBlocks = await _context.OutOfCenterBlocks.ToListAsync();
+		BuildActiveListFromBlocks(fullTutorList, outOfCenterBlocks);
 	}
 
-	private void BuildActiveListFromBlocks(List<TimeBlock> fullTutorList)
+	private void BuildActiveListFromBlocks(List<TimeBlock> fullTutorList, List<OutOfCenterBlock> outOfCenterBlocks)
 	{
 		// Convert UTC to Central Time
 		var centralZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
@@ -94,18 +96,55 @@ public class IndexModel : PageModel
 		DateToUse = UseCustomTime ? new DateTime(dateOnlyToUse, TimeToUse) : centralNow;
 		//add case for not showing subject
 
-		var confidences = Subject?.TutorConfidences;
-			
-		ActiveTutors = fullTutorList
+		var scheduleByTutor = fullTutorList.ToLookup(b => b.TutorId);
+		var outOfCenterByTutor = outOfCenterBlocks.ToLookup(b => b.TutorId);
+		var scheduledBlocks = fullTutorList
 			.Where(t => DateToUse.OccursDuring(t.Weekday, t.StartTime, t.EndTime))
-			.Select(t => new DashboardDisplayRow
+			.Select(t => (Block: t, OutOfCenter: CenterPresence.FindOutOfCenterBlock(outOfCenterByTutor[t.TutorId], DateToUse)))
+			.ToList();
+
+		ActiveTutors = scheduledBlocks
+			.Where(s => s.OutOfCenter is null)
+			.Select(s =>
 			{
-				TutorName = t.Tutor.DisplayName, 
-				ArrivalDisplay = t.StartTime.ToString(), 
-				DepartureString = t.EndTime.ToString(),
-				SubjectConfidence = ShowSubject ? confidences?.FirstOrDefault(s => s.TutorId == t.TutorId)?.ConfidenceLevel : null
+				var (arrival, departure) =
+					CenterPresence.GetTimeInCenter(s.Block, outOfCenterByTutor[s.Block.TutorId], TimeToUse);
+				return new DashboardDisplayRow
+				{
+					TutorName = s.Block.Tutor.DisplayName,
+					ArrivalDisplay = arrival.ToString(),
+					DepartureString = departure.ToString(),
+					SubjectConfidence = GetConfidence(s.Block.TutorId)
+				};
 			})
 			.OrderByDescending(r => r.SubjectConfidence)
 			.ToList();
+
+		OutOfCenterTutors = scheduledBlocks
+			.Where(s => s.OutOfCenter is not null)
+			.Select(s =>
+			{
+				var returnWindow = CenterPresence.FindTimeInCenterAfter(s.OutOfCenter!,
+					scheduleByTutor[s.Block.TutorId], outOfCenterByTutor[s.Block.TutorId]);
+				return new OutOfCenterDisplayRow
+				{
+					TutorName = s.Block.Tutor.DisplayName,
+					Location = s.OutOfCenter!.Location,
+					TimeOutDisplay = $"{s.OutOfCenter.StartTime} - {s.OutOfCenter.EndTime}",
+					ReturnDisplay = returnWindow is null
+						? "No"
+						: $"{returnWindow.Value.Arrival} - {returnWindow.Value.Departure}",
+					SubjectConfidence = GetConfidence(s.Block.TutorId)
+				};
+			})
+			.OrderByDescending(r => r.SubjectConfidence)
+			.ToList();
+	}
+
+	private int? GetConfidence(int tutorId)
+	{
+		if (!ShowSubject)
+			return null;
+		return Subject?.TutorConfidences.FirstOrDefault(s => s.TutorId == tutorId)?.ConfidenceLevel;
 	}
 }

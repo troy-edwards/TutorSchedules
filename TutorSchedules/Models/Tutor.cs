@@ -20,5 +20,8 @@ public class Tutor
 	[JsonIgnore]
 	public ICollection<TutorSubjectConfidence> SubjectConfidences { get; set; } =
 		new List<TutorSubjectConfidence>();
+
+	[JsonIgnore]
+	public ICollection<OutOfCenterBlock> OutOfCenterBlocks { get; set; } = new List<OutOfCenterBlock>();
 	//public TutorLevel Level { get; set; }
 }

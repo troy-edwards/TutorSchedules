@@ -57,4 +57,41 @@
       </table>
     </div>
   </div>
+  @if (Model.OutOfCenterTutors.Any())
+  {
+    <div class="row shadow-lg my-4 p-3 text-muted">
+      <h4>@Model.OutOfCenterTutors.Count Scheduled, but out of the center</h4>
+      <div class="col">
+        <table class="table table-sm">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Where</th>
+            <th>Time Out</th>
+            <th>Returns to Center</th>
+            @if (Model.ShowSubject)
+            {
+              <th>@Model.Subject.Name Comfort Level</th>
+            }
+          </tr>
+          </thead>
+          <tbody>
+          @foreach (var row in Model.OutOfCenterTutors)
+          {
+            <tr>
+              <td>@row.TutorName</td>
+              <td>@row.Location</td>
+              <td>@row.TimeOutDisplay</td>
+              <td>@row.ReturnDisplay</td>
+              @if (Model.ShowSubject)
+              {
+                <td style="background-color: @ComfortColors.GetColor(row.SubjectConfidence); border-radius: 5px; ">@(row.SubjectConfidence is null ? "?" : $"{row.SubjectConfidence.Value}")</td>
+              }
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
 </div>

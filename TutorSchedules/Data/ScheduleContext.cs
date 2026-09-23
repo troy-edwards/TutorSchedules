@@ -9,6 +9,7 @@ public class ScheduleContext : DbContext
 	public DbSet<TimeBlock> ScheduleBlocks { get; set; }
 	public DbSet<Subject> Subjects { get; set; }
 	public DbSet<TutorSubjectConfidence> Confidences { get; set; }
+	public DbSet<OutOfCenterBlock> OutOfCenterBlocks { get; set; }
 	
 	public ScheduleContext(DbContextOptions<ScheduleContext> options) : base(options)
 	{

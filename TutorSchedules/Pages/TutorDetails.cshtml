@@ -73,6 +73,84 @@
       </div>
     }
   </section>
+  <section class="row my-3 shadow p-3" id="OutOfCenterSchedule">
+    <h2 class="text-decoration-underline">Out of Center:</h2>
+    <p class="text-muted">
+      Times when @Model.Tutor.DisplayName is on the schedule above but working outside the main center
+      (e.g. embedded in a class). The dashboard won't list them as available during these times.
+    </p>
+    @if (Model.OutOfCenterError is not null)
+    {
+      <div class="alert alert-danger">@Model.OutOfCenterError</div>
+    }
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Day</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Where</th>
+        <th>Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+      @if (Model.OutOfCenterBlocks.Any())
+      {
+        @foreach (var block in Model.OutOfCenterBlocks)
+        {
+          <tr>
+            <td>@block.Weekday</td>
+            <td>@block.StartTime</td>
+            <td>@block.EndTime</td>
+            <td>@block.Location</td>
+            <td>
+              <form method="post" asp-page-handler="DeleteOutOfCenter" asp-route-TutorId="@Model.TutorId">
+                <input type="hidden" name="blockId" value="@block.Id"/>
+                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+              </form>
+            </td>
+          </tr>
+        }
+      }
+      else
+      {
+        <tr>
+          <td colspan="5" class="text-muted">None</td>
+        </tr>
+      }
+      </tbody>
+    </table>
+    <form method="post" asp-page-handler="AddOutOfCenter" asp-route-TutorId="@Model.TutorId">
+      <h5>Add Out of Center Time</h5>
+      <div class="mb-2">
+        @for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Saturday; day++)
+        {
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="weekdays" value="@day" id="OutOfCenterDay-@day"/>
+            <label class="form-check-label" for="OutOfCenterDay-@day">@day</label>
+          </div>
+        }
+      </div>
+      <div class="row g-2 align-items-end">
+        <div class="col-auto">
+          <label class="form-label" for="OutOfCenterStart">Start Time</label>
+          <input class="form-control" type="time" name="startTime" id="OutOfCenterStart" required/>
+        </div>
+        <div class="col-auto">
+          <label class="form-label" for="OutOfCenterEnd">End Time</label>
+          <input class="form-control" type="time" name="endTime" id="OutOfCenterEnd" required/>
+        </div>
+        <div class="col">
+          <label class="form-label" for="OutOfCenterLocation">Where</label>
+          <input class="form-control" type="text" name="location" id="OutOfCenterLocation" maxlength="50" required
+                 placeholder="e.g. Music building, Embedded in MATH-1314"/>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </div>
+    </form>
+  </section>
   <section class="row" id="EmbeddedSchedule">
 
   </section>
