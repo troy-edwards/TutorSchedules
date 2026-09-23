@@ -60,7 +60,11 @@ public class EditSubject : PageModel
         }
         else if (Subject.SubjectId == CourseId)
         {
-            _context.Subjects.Attach(Subject).State = EntityState.Modified;
+            // Only the name is editable; update the saved subject so fields not on the form (like Order) are kept.
+            var existingSubject = await _context.Subjects.FindAsync(CourseId);
+            if (existingSubject is null)
+                return RedirectToPage("/DataNotFound");
+            existingSubject.Name = Subject.Name;
         }
         else
         {
