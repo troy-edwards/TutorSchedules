@@ -20,7 +20,7 @@
         <label asp-for="CustomWeekDay">Weekday</label>
         <select asp-for="CustomWeekDay" asp-items="Model.OpenWeekDays"></select>
         <span><label asp-for="CustomTime">Time:</label></span>
-        <input asp-for="CustomTime" type="time" value="08:00"/>
+        <input asp-for="CustomTime" type="time" value="@Model.CustomTime.ToString("HH:mm")"/>
       </div>
       <button type="submit" class="btn btn-success my-2">Update List</button>
     </form>

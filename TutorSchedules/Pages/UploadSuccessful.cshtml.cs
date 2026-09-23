@@ -12,7 +12,7 @@ public class UploadSuccessful : PageModel
     {
         if (BlocksAdded < 0 || TutorsAdded < 0)
         {
-            return RedirectToPage("/Sheaningans");
+            return RedirectToPage("/Shenanigans");
         }
 
         this.TutorsAdded = TutorsAdded;

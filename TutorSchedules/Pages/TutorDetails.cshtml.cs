@@ -31,7 +31,7 @@ public class TutorDetails : PageModel
     {
         Tutor = await _context.Tutors.Include(t => t.ScheduledTimes).FirstOrDefaultAsync(t => t.Id == TutorId);
         if (Tutor is null)
-            return RedirectToPage("/TutorNotFound");
+            return RedirectToPage("/DataNotFound");
         ScheduledTimes = Tutor.ScheduledTimes;
         ComfortValues = await ConfidenceListBuilder.GetConfidenceList(_context, Tutor);
         OutOfCenterBlocks = await _context.OutOfCenterBlocks
@@ -49,7 +49,7 @@ public class TutorDetails : PageModel
             
         var existingTutor = await _context.Tutors.FindAsync(TutorId);
         if (existingTutor is null)
-            return RedirectToPage("/TutorNotFound");
+            return RedirectToPage("/DataNotFound");
             
         existingTutor.DisplayName = Tutor.DisplayName;
         await _context.SaveChangesAsync();

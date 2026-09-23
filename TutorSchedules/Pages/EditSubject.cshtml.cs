@@ -64,7 +64,7 @@ public class EditSubject : PageModel
         }
         else
         {
-            RedirectToPage("/Shenanigans");
+            return RedirectToPage("/Shenanigans");
         }
         
         await _context.SaveChangesAsync();

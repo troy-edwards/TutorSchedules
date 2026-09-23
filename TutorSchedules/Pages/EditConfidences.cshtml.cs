@@ -22,15 +22,20 @@ public class EditConfidences : PageModel
     [BindProperty] public List<TutorComfortValues> ComfortLevels { get; set; }
     
     
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
         Tutor = await _context.Tutors.FindAsync(TutorId);
+        if (Tutor is null)
+            return RedirectToPage("/DataNotFound");
         ComfortLevels = await ConfidenceListBuilder.GetConfidenceList(_context, Tutor);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
         Tutor = await _context.Tutors.FindAsync(TutorId);
+        if (Tutor is null)
+            return RedirectToPage("/DataNotFound");
         var confidences = await _context.Confidences.Where(c => c.TutorId == Tutor.Id).ToListAsync();
         foreach (var comfort in ComfortLevels)
         {

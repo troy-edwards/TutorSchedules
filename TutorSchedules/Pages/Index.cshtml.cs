@@ -27,7 +27,7 @@ public class IndexModel : PageModel
 	[BindProperty(SupportsGet = true)]
 	public bool UseCustomTime { get; set; }
 	[BindProperty(SupportsGet = true)]
-	public TimeOnly CustomTime { get; set; }
+	public TimeOnly CustomTime { get; set; } = new(8, 0);
 	[BindProperty(SupportsGet = true)]
 	public DayOfWeek CustomWeekDay { get; set; }
 	public TimeOnly TimeToUse { get; set; }
