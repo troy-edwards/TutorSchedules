@@ -63,5 +63,15 @@ public static class CenterPresence
         return GetTimeInCenter(scheduledBlock, sameDayOutOfCenter, returnTime);
     }
 
+    /// <summary>
+    /// Whether someone in the center until the given departure time is there for the whole appointment.
+    /// An appointment that would run past midnight never fits.
+    /// </summary>
+    public static bool StaysThroughAppointment(TimeOnly departure, TimeOnly appointmentStart, TimeSpan appointmentLength)
+    {
+        var appointmentEnd = appointmentStart.Add(appointmentLength, out var wrappedDays);
+        return wrappedDays == 0 && appointmentEnd <= departure;
+    }
+
     private static bool Covers(TimeOnly start, TimeOnly end, TimeOnly time) => start <= time && time < end;
 }

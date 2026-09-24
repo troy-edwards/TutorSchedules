@@ -10,6 +10,13 @@ using TutorSchedules.Utilities.Extensions;
 
 namespace TutorSchedules.Pages;
 
+public enum DashboardMode
+{
+	HereNow,
+	AtTime,
+	Appointment
+}
+
 public class IndexModel : PageModel
 {
 	public List<SelectListItem> OpenWeekDays = 
@@ -21,15 +28,32 @@ public class IndexModel : PageModel
 		new SelectListItem(DayOfWeek.Friday.ToString(),DayOfWeek.Friday.ToString()),
 		new SelectListItem(DayOfWeek.Saturday.ToString(),DayOfWeek.Saturday.ToString()),
 	];
+	public List<(DashboardMode Mode, string Label)> Modes =
+	[
+		(DashboardMode.HereNow, "Here now"),
+		(DashboardMode.AtTime, "At a time"),
+		(DashboardMode.Appointment, "Appointment"),
+	];
 	private ScheduleContext _context;
 	[BindProperty(SupportsGet = true)]
 	public string? SubjectId { get; set; }
 	[BindProperty(SupportsGet = true)]
-	public bool UseCustomTime { get; set; }
+	public DashboardMode Mode { get; set; }
+	public bool UseCustomTime => Mode != DashboardMode.HereNow;
+	// Null on a first visit, until they're prefilled with today and the next whole hour.
 	[BindProperty(SupportsGet = true)]
-	public TimeOnly CustomTime { get; set; } = new(8, 0);
+	public TimeOnly? CustomTime { get; set; }
 	[BindProperty(SupportsGet = true)]
-	public DayOfWeek CustomWeekDay { get; set; }
+	public DayOfWeek? CustomWeekDay { get; set; }
+	// Nullable so a cleared box counts as zero instead of failing to bind.
+	[BindProperty(SupportsGet = true)]
+	public int? AppointmentHours { get; set; } = 1;
+	[BindProperty(SupportsGet = true)]
+	public int? AppointmentMinutes { get; set; } = 0;
+	// Zero lists anyone in the center at the time.
+	public TimeSpan AppointmentLength => Mode == DashboardMode.Appointment
+		? new TimeSpan(AppointmentHours ?? 0, AppointmentMinutes ?? 0, 0)
+		: TimeSpan.Zero;
 	public TimeOnly TimeToUse { get; set; }
 	public DayOfWeek WeekdayToUse { get; set; }
 	public DateTime DateToUse { get; set; }
@@ -89,9 +113,12 @@ public class IndexModel : PageModel
 		// Convert UTC to Central Time
 		var centralZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
 		var centralNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, centralZone);
-		
-		TimeToUse = UseCustomTime ? CustomTime : TimeOnly.FromDateTime(centralNow);
-		WeekdayToUse = UseCustomTime ? CustomWeekDay : centralNow.DayOfWeek;
+		// The weekday list has no Sunday.
+		CustomWeekDay ??= centralNow.DayOfWeek == DayOfWeek.Sunday ? DayOfWeek.Monday : centralNow.DayOfWeek;
+		CustomTime ??= new TimeOnly(centralNow.Hour, 0).AddHours(1);
+
+		TimeToUse = UseCustomTime ? CustomTime.Value : TimeOnly.FromDateTime(centralNow);
+		WeekdayToUse = UseCustomTime ? CustomWeekDay.Value : centralNow.DayOfWeek;
 		var dateOnlyToUse = DateOnly.FromDateTime(centralNow.GetNextWeekday(WeekdayToUse)); 
 		DateToUse = UseCustomTime ? new DateTime(dateOnlyToUse, TimeToUse) : centralNow;
 		//add case for not showing subject
@@ -105,17 +132,15 @@ public class IndexModel : PageModel
 
 		ActiveTutors = scheduledBlocks
 			.Where(s => s.OutOfCenter is null)
-			.Select(s =>
+			.Select(s => (s.Block,
+				TimeInCenter: CenterPresence.GetTimeInCenter(s.Block, outOfCenterByTutor[s.Block.TutorId], TimeToUse)))
+			.Where(s => CenterPresence.StaysThroughAppointment(s.TimeInCenter.Departure, TimeToUse, AppointmentLength))
+			.Select(s => new DashboardDisplayRow
 			{
-				var (arrival, departure) =
-					CenterPresence.GetTimeInCenter(s.Block, outOfCenterByTutor[s.Block.TutorId], TimeToUse);
-				return new DashboardDisplayRow
-				{
-					TutorName = s.Block.Tutor.DisplayName,
-					ArrivalDisplay = arrival.ToString(),
-					DepartureString = departure.ToString(),
-					SubjectConfidence = GetConfidence(s.Block.TutorId)
-				};
+				TutorName = s.Block.Tutor.DisplayName,
+				ArrivalDisplay = s.TimeInCenter.Arrival.ToString(),
+				DepartureString = s.TimeInCenter.Departure.ToString(),
+				SubjectConfidence = GetConfidence(s.Block.TutorId)
 			})
 			.OrderByDescending(r => r.SubjectConfidence)
 			.ToList();

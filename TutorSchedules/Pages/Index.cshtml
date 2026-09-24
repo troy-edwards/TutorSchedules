@@ -5,28 +5,46 @@
 @{
   ViewData["Title"] = "Dashboard";
 }
-<script src="~/js/site.js"></script>
 
 <div class="container">
   <div class="row">
     <form method="post" class="shadow-lg p-3" >
-      <label asp-for="SubjectId">Subject:</label>
-      <select asp-for="SubjectId" asp-items="Model.SubjectList" type="text" value="@Model.Subject?.Name"></select>
-      <div class="form-check form-switch my-2">
-        <label class="form-check-label" asp-for="UseCustomTime">Use Custom Time? </label>
-        <input asp-for="UseCustomTime" class="form-check-input" type="checkbox" id="CustomTimeVisible"/>
+      <div class="mb-2">
+        <div class="btn-group" role="group" aria-label="Lookup">
+          @foreach (var (mode, label) in Model.Modes)
+          {
+            <input type="radio" class="btn-check" name="Mode" id="Mode@(mode)" value="@mode" checked="@(Model.Mode == mode)" onchange="this.form.submit()"/>
+            <label class="btn btn-outline-primary" for="Mode@(mode)">@label</label>
+          }
+        </div>
       </div>
-      <div class="collapse" id="CustomTimeInfo">
+      <label asp-for="SubjectId">Subject:</label>
+      <select asp-for="SubjectId" asp-items="Model.SubjectList" type="text" value="@Model.Subject?.Name" onchange="this.form.submit()"></select>
+      <div class="mt-2 @(Model.UseCustomTime ? "" : "d-none")">
         <label asp-for="CustomWeekDay">Weekday</label>
         <select asp-for="CustomWeekDay" asp-items="Model.OpenWeekDays"></select>
         <span><label asp-for="CustomTime">Time:</label></span>
-        <input asp-for="CustomTime" type="time" value="@Model.CustomTime.ToString("HH:mm")"/>
+        <input asp-for="CustomTime" type="time" value="@Model.CustomTime?.ToString("HH:mm")"/>
+        <span class="@(Model.Mode == DashboardMode.Appointment ? "" : "d-none")">
+          <span class="ms-2">Appointment length:</span>
+          <input asp-for="AppointmentHours" type="number" min="0" max="12" style="width: 4em"/>
+          <label asp-for="AppointmentHours">hr</label>
+          <input asp-for="AppointmentMinutes" type="number" min="0" max="59" step="5" style="width: 4em"/>
+          <label asp-for="AppointmentMinutes">min</label>
+        </span>
       </div>
       <button type="submit" class="btn btn-success my-2">Update List</button>
     </form>
   </div>
   <div class="row shadow-lg my-4 p-3">
-    <h1>@Model.ActiveTutors.Count Tutors available at @Model.TimeToUse.ToString("h:mm tt") on @Model.WeekdayToUse</h1>
+    @if (Model.AppointmentLength > TimeSpan.Zero)
+    {
+      <h1>@Model.ActiveTutors.Count Tutors available @Model.TimeToUse.ToString("h:mm tt") - @Model.TimeToUse.Add(Model.AppointmentLength).ToString("h:mm tt") on @Model.WeekdayToUse</h1>
+    }
+    else
+    {
+      <h1>@Model.ActiveTutors.Count Tutors available at @Model.TimeToUse.ToString("h:mm tt") on @Model.WeekdayToUse</h1>
+    }
     <div class="col">
       <table class="table table-hover">
         <thead>

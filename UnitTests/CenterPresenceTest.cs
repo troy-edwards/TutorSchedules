@@ -217,4 +217,42 @@ public class CenterPresenceTest
 
         Assert.That(CenterPresence.FindTimeInCenterAfter(block, [mondayShift, tuesdayShift], [block]), Is.Null);
     }
+
+    [Test]
+    public void StaysThroughAppointment_LeavingRightWhenItEndsFits()
+    {
+        Assert.That(CenterPresence.StaysThroughAppointment(_noon, new TimeOnly(11, 0), TimeSpan.FromHours(1)), Is.True);
+    }
+
+    [Test]
+    public void StaysThroughAppointment_LeavingBeforeItEndsDoesntFit()
+    {
+        Assert.That(CenterPresence.StaysThroughAppointment(new TimeOnly(11, 45), new TimeOnly(11, 0), TimeSpan.FromHours(1)),
+            Is.False);
+    }
+
+    [Test]
+    public void StaysThroughAppointment_NoLengthAlwaysFits()
+    {
+        Assert.That(CenterPresence.StaysThroughAppointment(new TimeOnly(11, 15), new TimeOnly(11, 0), TimeSpan.Zero),
+            Is.True);
+    }
+
+    [Test]
+    public void StaysThroughAppointment_RunningPastMidnightNeverFits()
+    {
+        Assert.That(CenterPresence.StaysThroughAppointment(new TimeOnly(23, 59), new TimeOnly(23, 30), TimeSpan.FromHours(1)),
+            Is.False);
+    }
+
+    [Test]
+    public void StaysThroughAppointment_OutOfCenterBlockCutsItShort()
+    {
+        List<OutOfCenterBlock> blocks = [OutBlock(DayOfWeek.Monday, _twoPm, _threePm)];
+        var appointmentStart = new TimeOnly(13, 30);
+
+        var (_, departure) = CenterPresence.GetTimeInCenter(_mondayShift, blocks, appointmentStart);
+
+        Assert.That(CenterPresence.StaysThroughAppointment(departure, appointmentStart, TimeSpan.FromHours(1)), Is.False);
+    }
 }
